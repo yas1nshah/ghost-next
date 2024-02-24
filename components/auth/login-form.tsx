@@ -48,10 +48,10 @@ const LoginForm = () => {
         })
     }
   return (
-    <div className="bg-white">
+    <div >
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}
-             className='space-y-6'
+             className='space-y-6 p-4'
             >
                 <div className="space-y-4">
                     <FormField

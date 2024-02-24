@@ -27,7 +27,7 @@ body,
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
  
-    --accent: 210 40% 96.1%;
+    --accent: #C9D72E;
     --accent-foreground: 222.2 47.4% 11.2%;
  
     --destructive: 0 84.2% 60.2%;
@@ -41,33 +41,33 @@ body,
   }
  
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: #111;
+    --foreground: #EEEEEE;
  
-    --card: 222.2 84% 4.9%;
+    --card: c;
     --card-foreground: 210 40% 98%;
  
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: rgb(0, 0, 0);
+    --popover-foreground: #EEEEEE;
  
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: #49B618;
+    --primary-foreground: #EEEEEE;
  
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: #C9D72E;
+    --secondary-foreground: #EEEEEE;
  
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: rgba(123, 123, 123, 0.5);
+    --muted-foreground: rgba(255, 255, 255, 0.5);
  
-    --accent: 217.2 32.6% 17.5%;
+    --accent: #49B618;
     --accent-foreground: 210 40% 98%;
  
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: #d71344;
+    --destructive-foreground: #EEEEEE;
  
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --border: #49B618;
+    --input: #4ab61886;
+    --ring: #49B618;
   }
 }
  
@@ -77,5 +77,33 @@ body,
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+.main {
+  @apply relative max-w-6xl mx-auto overflow-x-hidden px-2 md:px-4
+  before:fixed before:h-[300px] dark:before:opacity-15 before:opacity-90 before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-accent before:to-transparent before:blur-2xl before:content-[''] before:-z-10
+  after:fixed after:top-2/4 after:w-96 my-3 after:h-1/4  after:left-2/4 after:bg-gradient-conic after:from-secondary after:via-accent after:blur-3xl after:-z-10 after:opacity-85 dark:after:opacity-25
+}
+
+.main::after {
+  animation: slimyEffect 25s infinite alternate-reverse;
+}
+
+@keyframes slimyEffect  {
+  0% {
+    transform: scaleY(1) rotate(0deg);
+  }
+  25% {
+    transform: scaleY(0.5) rotate(45deg);
+  }
+  50% {
+    transform: scaleY(1.5) rotate(90deg);
+  }
+  75% {
+    transform: scaleY(0.5) rotate(135deg);
+  }
+  100% {
+    transform: scaleY(1) rotate(180deg);
   }
 }

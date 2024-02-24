@@ -58,8 +58,8 @@ model Account {
 }
 
 model Car {
-  id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  adId           String   @db.ObjectId
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
   date           DateTime @default(now())
   featured       Boolean  @default(false)
   gpcar          Boolean  @default(false)

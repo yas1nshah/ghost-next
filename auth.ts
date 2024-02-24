@@ -6,6 +6,16 @@ import authConfig from "@/auth.config"
 import { db } from "@/lib/db"
 import { getUserById } from "./data/user"
 
+
+declare module "next-auth" {
+  interface User {
+    /** The user's postal address. */
+    role: string
+    adLimit : number
+  }
+}
+
+
 export const {
      handlers: {GET, POST},
       auth,
@@ -17,8 +27,8 @@ export const {
       if(token.sub && session.user)
       {
         session.user.id = token.sub
-        session.user.role = token.role
-        session.user.adLimit = token.adLimit
+        session.user.role = token.role as string
+        session.user.adLimit = token.adLimit as number
 
 
       }
@@ -26,7 +36,6 @@ export const {
     },
 
     async jwt({ token }) {
-      console.log(token)
       if(!token.sub) return token;
 
       const existingUser = await getUserById(token.sub)
