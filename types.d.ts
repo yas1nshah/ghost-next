@@ -3,6 +3,8 @@
 interface Car {
     title: string,
     id : string | undefined,
+
+    date: string | undefined,
     galleryIndex : number,
     gallery: string[],
 
@@ -21,6 +23,9 @@ interface Car {
     body :  string,
     color:  string,
 
+    gpCar : boolean | undefined,
+    featuredCar : boolean | undefined,
+
     sellerID: string,
     seller: any,
     sellerComments :  string,
@@ -31,3 +36,22 @@ interface City {
     name: string;
   }
   
+
+interface CarCardProps {
+    id: string;
+    imgs: string[]; 
+    galleryIndex: number,
+    title: string;
+    price: number;
+    year: number;
+    registration: string; 
+    mileage: string;
+    engine: string; 
+    time: string; 
+  }
+
+interface CarCarosel {
+    title : string;
+    see_more : string;
+    cars : Car[];
+}

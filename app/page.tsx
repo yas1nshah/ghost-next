@@ -1,31 +1,54 @@
-import Image from "next/image";
-import Link from 'next/link'
-import { Outfit } from "next/font/google";
-import { Button } from "@/components/ui/button";
+import CarCard from '@/components/common/carCard'
+import React from 'react'
 
-const font = Outfit({
-  subsets: ["latin"],
-  weight: ["600"]
-})
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
+import CarCarosel from '@/components/common/car-carousel'
+import { getHomeData } from '@/actions/home'
 
-export default function Home() {
-  return (
+async function getData() {
+  const res = await fetch('http://localhost:3000/api/home',{cache: 'no-cache'})
+ 
+  if (!res.ok) {
+    throw new Error('Failed to fetch data')
+  }
   
-    <main className="flex h-full glex-col items-center justify-center bg-sky-500">
-      <div className="space-y-6 text-center">
-        <h1 className={`text-6xl font-semibold text-white drop-shadow-md ${font.className}`}>
-         🔐 Auth
-        </h1>
-        <p className="text-white text-lg">
-          A simple authentication service
-        </p>
-
-          <Button variant={"secondary"} size={"lg"}>
-            <Link href="/account/login">Sign in</Link>
-            
-          </Button>
-
-      </div>
-    </main>
-  );
+  return res.json()
 }
+
+const HomePage = async () => {
+  const data = await  getData()
+
+  return (
+    <div>
+      <CarCarosel
+      title='GP Cars'
+      see_more='inventory/search?adType=gp-car'
+      cars={data.recentCars}
+      />
+       
+
+      {/* <CarCard
+        id='65d9ba2ab2a5b484e2dc16c7'
+        title='Honda Civic Reborn Black Fabric 2004'
+        year={2004}
+        engine='Petrol'
+        mileage='3255'
+        imgs={["Honda-Civic-2004-<ID>-0"]}
+        price={2144}
+        registration='Lahore'
+        time='2024-02-24T09:43:06.556+00:00'
+        key={"0"}
+      /> */}
+
+
+    </div>
+  )
+}
+
+export default HomePage

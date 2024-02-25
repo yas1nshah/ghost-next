@@ -9,33 +9,33 @@ body,
 }
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: #ffffff;
+    --foreground: #111;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: rgba(123, 123, 123, 0.15);
+    --card-foreground: #111;
  
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: #ffffff;
+    --popover-foreground: #111;
  
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: #49B618;
+    --primary-foreground: #EEEEEE;
  
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: #C9D72E;
+    --secondary-foreground: #EEEEEE;
  
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: rgba(123, 123, 123, 0.5);
+    --muted-foreground: rgba(255, 255, 255, 0.5);
  
     --accent: #C9D72E;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent-foreground: #EEEEEE;
  
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: #d71344;
+    --destructive-foreground: #EEEEEE;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: #49B618;
+    --input: #4ab61886;
+    --ring: #49B618;
  
     --radius: 0.5rem;
   }
@@ -44,7 +44,7 @@ body,
     --background: #111;
     --foreground: #EEEEEE;
  
-    --card: c;
+    --card: rgba(123, 123, 123, 0.15);
     --card-foreground: 210 40% 98%;
  
     --popover: rgb(0, 0, 0);
@@ -60,7 +60,7 @@ body,
     --muted-foreground: rgba(255, 255, 255, 0.5);
  
     --accent: #49B618;
-    --accent-foreground: 210 40% 98%;
+    --accent-foreground: #EEEEEE;
  
     --destructive: #d71344;
     --destructive-foreground: #EEEEEE;
@@ -81,7 +81,7 @@ body,
 }
 
 .main {
-  @apply relative max-w-6xl mx-auto overflow-x-hidden px-2 md:px-4
+  @apply relative max-w-6xl mx-auto  px-2 md:px-4 overflow-hidden
   before:fixed before:h-[300px] dark:before:opacity-15 before:opacity-90 before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-accent before:to-transparent before:blur-2xl before:content-[''] before:-z-10
   after:fixed after:top-2/4 after:w-96 my-3 after:h-1/4  after:left-2/4 after:bg-gradient-conic after:from-secondary after:via-accent after:blur-3xl after:-z-10 after:opacity-85 dark:after:opacity-25
 }
@@ -106,4 +106,17 @@ body,
   100% {
     transform: scaleY(1) rotate(180deg);
   }
+}
+
+
+.detailed-ov{
+  @apply flex justify-between py-4
+}
+
+.detailed-ov-key{
+  @apply text-base font-normal opacity-75 flex-grow
+}
+
+.detailed-ov-value{
+  @apply text-base font-semibold
 }

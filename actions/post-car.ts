@@ -43,6 +43,8 @@ export const postCar = async (values : z.infer<typeof CarSchema>) => {
 
             }
         })
+
+        console.log(car)
         return {success: "Car Posted", id: car.id}
     }
     catch (error)

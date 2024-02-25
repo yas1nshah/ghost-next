@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 
+import { useRouter } from 'next/navigation'
+
 import formatAmount from '@/lib/foramt-price'
 import { postCar, saveDocumentInteraction } from '@/actions/post-car'
 import { Button } from '@/components/ui/button'
@@ -30,18 +32,23 @@ interface FileBlob extends Readable {
 
 const AddCarForm = () => {
   const [isPending, startTransition] =  useTransition()
+  const router = useRouter()
 
-    const [error, setError] = useState<string | undefined>("");
-    const [success, setSuccess] = useState<string | undefined>("");
+  const [error, setError] = useState<string | undefined>("");
+  const [success, setSuccess] = useState<string | undefined>("");
     
   const [gallery, setGallery] = useState<Blob[]>([]);
 
   const [newCar, setNewCar] = useState<Car>({
-    id: "gasdg",
+    id: undefined,
     title: "",
     galleryIndex: 0,
     gallery: [],
-  
+    date : undefined,
+    
+    featuredCar: false,
+    gpCar: false,
+
     make: "",
     model: "",
     year: 0,
@@ -300,7 +307,11 @@ const AddCarForm = () => {
 
 
   const uploadImages = async () => {
-
+    if(!newCar.id)
+    {
+      setError("ID not defined")
+      return;
+    }
   
     for (let index = 0; index < gallery.length; index++) {
       const image = gallery[index];
@@ -313,7 +324,8 @@ const AddCarForm = () => {
         setError(data.error as string + index);
         setSuccess(data.success as string + index);
       });
-
+      
+      router.replace("/")
     
     }
       
@@ -330,9 +342,11 @@ const AddCarForm = () => {
       uploadImages()
         postCar(newCar)
             .then((data) => {
+              console.log(newCar.id)
               setNewCar({...newCar, id: data.id})
-                setError(data.error);
-                setSuccess(data.success);
+              setError(data.error);
+              setSuccess(data.success);
+              console.log(newCar.id)
             })
             .then( ()=> {
               uploadImages()
