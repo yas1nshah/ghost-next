@@ -7,6 +7,7 @@ import CopyToClipboard from '@/components/car-details/clipboard'
 
 import React from 'react'
 import formatTimeDifference from '@/lib/format-date'
+import Gallery from '@/components/car-details/gallery'
 
 async function getData(id : string) {
     const res = await fetch(`http://localhost:3000/api/inventory/car-details?id=${id}`,{cache: 'no-cache'})
@@ -26,11 +27,12 @@ const CarDetailsPage = async ({ params }: { params: { title: string , id : strin
     <div className="main flex flex-wrap md:flex-nowrap gap-3 p-2">
         <div className="content w-full md:w-2/3 flex-grow flex flex-col">
             <h1 className="text-xl md:text-2xl font-semibold order-2 pt-2 md:order-1 md:pb-4">{`${car.make} ${car.model} ${car.year}`}</h1>
-            <div className="order-2 md:order-1 stat-value text-secondary md:hidden"><span className="font-normal">Rs</span> {formatAmount(car.price)}</div>
+            <div className="order-2 md:order-1 stat-value text-primary md:hidden"><span className="font-normal">Rs</span> {formatAmount(car.price)}</div>
 
             <div className="gallery  relative overflow-hidden aspect-video
                        w-full rounded-xl bg-primary-light dark:bg-primary
                        order-1 md:order-2">
+                <Gallery gallery= {car.gallery} id={car.id}/>
 
             </div>
 

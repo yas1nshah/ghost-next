@@ -17,7 +17,7 @@ const CarCarosel = (params: CarCarosel) => {
   return (
     <div className='my-4'>
       <div className="flex justify-between items-center">
-        <h2 className="font-semibold text-xl md:text-2xl py-4">{"Ghost Yard's"}</h2>
+        <h2 className="font-semibold text-xl md:text-2xl py-4">{params.title}</h2>
         <Button className='' size={'sm'} variant={'outline'} >
           <Link className='text-sm' href={"/"}>See More</Link>
         </Button>

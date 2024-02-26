@@ -24,6 +24,7 @@ export const postCar = async (values : z.infer<typeof CarSchema>) => {
     try {
         const car = await db.car.create({
             data:{
+                title: validatedFields.data.title,
                 make: validatedFields.data.make,
                 model: validatedFields.data.model,
                 year: validatedFields.data.year,
@@ -44,8 +45,7 @@ export const postCar = async (values : z.infer<typeof CarSchema>) => {
             }
         })
 
-        console.log(car)
-        return {success: "Car Posted", id: car.id}
+        return  {success: "Car Posted", newId: car.id}
     }
     catch (error)
     {

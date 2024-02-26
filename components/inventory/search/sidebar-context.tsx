@@ -1,6 +1,7 @@
 "use client"
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import Script from 'next/script';
 
 import {
     Accordion,
@@ -37,9 +38,10 @@ type SideBarContentProps = {
   };
 
 const SideBarContent = (params : SideBarContentProps)=> {
-    
+    const [defaultValue, setDefaultValue] = useState("");
+
     const router = useRouter()
-    const {keyword, yearFrom, yearTo, priceFrom, priceTo, color, transmission, bodyType, adType, page, makeP, modelP  } = params;
+    const {keyword, yearFrom, yearTo, priceFrom, priceTo, color, transmission, bodyType, adType,  makeP, modelP  } = params;
     const [keywordS, setKeywordS] = useState(keyword)
     const [yearFromS, setYearFromS] = useState(yearFrom)
     const [yearToS, setYearToS] = useState(yearTo)
@@ -52,6 +54,22 @@ const SideBarContent = (params : SideBarContentProps)=> {
     const [makeS, setMakeS] = useState(makeP)
     const [modelS, setModelS] = useState(modelP)
 
+    useEffect(() => {
+        function handleResize() {
+            const screenWidth = window.innerWidth;
+            if (screenWidth <= 768) { // Assuming 768px as the breakpoint for mobile screens
+                setDefaultValue('cars');
+            } else {
+                setDefaultValue('filters');
+            }
+        }
+
+        // Add event listener for window resize
+        window.addEventListener('resize', handleResize);
+
+        // Clean up event listener
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     const handleSubmit = (e:any) => {
         e.preventDefault();
@@ -70,7 +88,7 @@ const SideBarContent = (params : SideBarContentProps)=> {
         if (adTypeS) searchParams.append('adType', adTypeS);
         if (makeS) searchParams.append('make', encodeURIComponent(makeS));
         if (modelS) searchParams.append('model', encodeURIComponent(modelS));
-        if (page) searchParams.append('page', page);
+        // if (page) searchParams.append('page', page);
       
         const dynamicSearchURL = `/inventory/search?${searchParams.toString()}`;
       
@@ -79,10 +97,33 @@ const SideBarContent = (params : SideBarContentProps)=> {
       };
   
     return (
-    <div className='w-full'>
-        <Accordion type="single" collapsible>
-            <AccordionItem value="item-1">
-                <AccordionTrigger >Filters</AccordionTrigger>
+    <div>
+        <Script
+            id="show-banner"
+            strategy="lazyOnload"	
+            dangerouslySetInnerHTML={{
+                __html: `function isDesktop() {
+                    // Check if the device width is greater than a certain threshold (you can adjust this as needed)
+                    return window.innerWidth > 768;
+                }
+                
+                // Run the script with a 3-second delay
+                setTimeout(function() {
+                    // Check if the device is desktop
+                    if (isDesktop()) {
+                        // Find the button with id "filter" and trigger a click event
+                        var filterButton = document.getElementById("filter");
+                        if (filterButton) {
+                            filterButton.click();
+                        }
+                    }
+                }, 1000);`,
+            }}
+            />
+    
+        <Accordion  type="single" className="data-state-open" collapsible>
+            <AccordionItem value="filters">
+                <AccordionTrigger id='filter' >Filters</AccordionTrigger>
                 <AccordionContent>
                 <form onSubmit={handleSubmit}>
                     <Accordion type="multiple" >
@@ -210,9 +251,9 @@ const SideBarContent = (params : SideBarContentProps)=> {
                                     <SelectValue placeholder="Ad Type" />
                                     </SelectTrigger>
                                     <SelectContent >
-                                    <SelectItem value="Free">Free Listing</SelectItem>
-                                    <SelectItem value="Ghost-Yard">Ghost Yards</SelectItem>
-                                    <SelectItem value="Featured">Featured</SelectItem>
+                                    <SelectItem value="free-listing">Free Listing</SelectItem>
+                                    <SelectItem value="ghost-yard">Ghost Yards</SelectItem>
+                                    <SelectItem value="featured">Featured</SelectItem>
                                     </SelectContent>
                                 </Select>
                                 <Button className='mt-2' type='submit'>Go</Button>

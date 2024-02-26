@@ -55,3 +55,13 @@ interface CarCarosel {
     see_more : string;
     cars : Car[];
 }
+
+interface CarResult {
+  id: number;
+  make: string;
+  model: string;
+  title: string;
+  engineType: string;
+  engineCapacity: string;
+  bodyType: string;
+}

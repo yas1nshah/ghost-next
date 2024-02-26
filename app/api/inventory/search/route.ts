@@ -2,14 +2,14 @@ import { db } from "@/lib/db";
 
 interface FilterConditions {
     location?: { equals: string };
-    make?: { equals?: string, contains: string };
-    model?: { equals?: string, contains: string};
+    make?: { equals?: string, contains: string, mode: any };
+    model?: { equals?: string, contains: string, mode: any};
     registration?: { equals: string };
     transmission?: { equals: boolean };
     year?: { gte?: number; lte?: number };
     price?: { gte?: number; lte?: number };
-    title?: { contains?: string};
-    body?: { equals: string };
+    title?: { contains?: string, mode: any};
+    body?: { equals: string, mode: any };
     gpcar?: { equals: boolean };
     featured?: { equals: boolean };
 }
@@ -38,16 +38,16 @@ export async function GET(request: Request) {
             filter_conditions.location = { equals: location };
         }
         if (make !== 'All') {
-            filter_conditions.make = { contains: make };
+            filter_conditions.make = { contains: make, mode: 'insensitive' };
         }
         if (model !== 'All') {
-            filter_conditions.model = { contains: model };
+            filter_conditions.model = { contains: model, mode: 'insensitive' };
         }
         if (registration !== 'All') {
             filter_conditions.registration = { equals: registration };
         }
         if (transmission !== 'All') {
-            filter_conditions.transmission = { equals: (transmission === 'Automatic') };
+            filter_conditions.transmission = { equals: (transmission.toLowerCase() === 'automatic') };
         }
         if (year_from !== 'All') {
             filter_conditions.year = { gte: parseInt(year_from, 10) };
@@ -62,10 +62,10 @@ export async function GET(request: Request) {
             filter_conditions.price = { ...filter_conditions.price, lte: parseFloat(price_To) };
         }
         if (keyword !== 'All') {
-            filter_conditions.title = { contains : keyword };
+            filter_conditions.title = { contains : keyword, mode: 'insensitive' };
         }
         if (body_type !== 'All') {
-            filter_conditions.body = { equals: body_type };
+            filter_conditions.body = { equals: body_type, mode: 'insensitive' };
         }
         if (ad_type !== 'All') {
             if (ad_type === "ghost-yard") {
@@ -86,6 +86,7 @@ export async function GET(request: Request) {
 
         const cars = await db.car.findMany({
             where: filter_conditions,
+            // where:{make:{contains:make, mode:"insensitive"}},
             orderBy: { date: 'desc' },
             skip: starting_index,
             take: items_per_page

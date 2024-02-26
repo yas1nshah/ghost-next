@@ -40,7 +40,7 @@ const AddCarForm = () => {
   const [gallery, setGallery] = useState<Blob[]>([]);
 
   const [newCar, setNewCar] = useState<Car>({
-    id: undefined,
+    id: "",
     title: "",
     galleryIndex: 0,
     gallery: [],
@@ -71,10 +71,9 @@ const AddCarForm = () => {
 
   // ? Models
   const [showModels, setShowModels] = useState(false)
-  const [modelData, setModelData] = useState([ 
+  const [modelData, setModelData] = useState<CarResult[]>([ 
     {
       "id": 352,
-      "makeID": 3,
       "make": "Honda",
       "model": "Civic Reborn VTi Oriel 1.8 i-VTEC",
       "title": "Honda Civic Reborn VTi Oriel 1.8 i-VTEC",
@@ -84,7 +83,6 @@ const AddCarForm = () => {
     },
     {
     "id": 332,
-    "makeID": 3,
     "make": "Honda",
     "model": "Civic",
     "title": "Honda Civic",
@@ -94,7 +92,6 @@ const AddCarForm = () => {
   },
   {
     "id": 1322,
-    "makeID": 1,
     "make": "Toyota",
     "model": "Corolla",
     "title": "Toyota Corolla",
@@ -104,7 +101,6 @@ const AddCarForm = () => {
   },
   {
     "id": 1375,
-    "makeID": 1,
     "make": "Toyota",
     "model": "Corolla GLi 1.3",
     "title": "Toyota Corolla GLi 1.3",
@@ -114,7 +110,6 @@ const AddCarForm = () => {
   },
   {
     "id": 1054,
-    "makeID": 2,
     "make": "Suzuki",
     "model": "Alto",
     "title": "Suzuki Alto",
@@ -124,7 +119,6 @@ const AddCarForm = () => {
   },
   {
     "id": 1752,
-    "makeID": 1,
     "make": "Toyota",
     "model": "Yaris",
     "title": "Toyota Yaris",
@@ -136,10 +130,21 @@ const AddCarForm = () => {
 
   const getModels = async (value:string) => {
     
-    let searchResult;
+    let searchResult: CarResult[];
 
-    searchResult = await search(value);
-        setModelData(searchResult);
+        // Check local storage for models
+        const cachedModels = localStorage.getItem('models');
+        if (cachedModels) {
+            const parsedModels: CarResult[] = JSON.parse(cachedModels);
+            searchResult = parsedModels.filter(model =>
+                model.make.toLowerCase().includes(value.toLowerCase())
+            );
+            setModelData(searchResult);
+        } else {
+            // If models not found in local storage, fetch from server
+            searchResult = await search(value);
+            setModelData(searchResult);
+        }
   }
 
   // ? Registration
@@ -158,7 +163,7 @@ const AddCarForm = () => {
           searchResult = parsedCities.filter((city: City) =>
             city.name.toLowerCase().includes(keyword.toLowerCase())
           );
-          setCityData(searchResult);
+          setRegData(searchResult);
         } else {
           // If cities not found in local storage, fetch from server
           const response = await fetch('/cities.json'); // Adjust the path as needed
@@ -169,7 +174,7 @@ const AddCarForm = () => {
           searchResult = citiesData.filter((city : City)=>
             city.name.toLowerCase().includes(keyword.toLowerCase())
           );
-          setCityData(searchResult);
+          setRegData(searchResult);
         }
     
         
@@ -306,17 +311,17 @@ const AddCarForm = () => {
   }
 
 
-  const uploadImages = async () => {
-    if(!newCar.id)
-    {
-      setError("ID not defined")
-      return;
-    }
+  const uploadImages = async (id:string) => {
+    // if(newCar.id === "")
+    // {
+    //   setError("ID not defined")
+    //   return;
+    // }
   
     for (let index = 0; index < gallery.length; index++) {
       const image = gallery[index];
       const makeModelYear = `${newCar.make}-${newCar.model}-${newCar.year}`; // Assuming make and model are available
-      const imageName = `${makeModelYear}-${newCar.id}-${index}.webp`;
+      const imageName = `${makeModelYear}-${id}-${index}.webp`;
       const data = new FormData();
       data.append('img', new File([image], imageName, { type: image.type }));
       saveDocumentInteraction(data)
@@ -331,27 +336,27 @@ const AddCarForm = () => {
       
   };
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit =  (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Prevent the default form submission behavior
 
     setError("");
     setSuccess("");
-    uploadImages()
+
 
     startTransition(async () => {
-      uploadImages()
         postCar(newCar)
-            .then((data) => {
-              console.log(newCar.id)
-              setNewCar({...newCar, id: data.id})
+            .then(async (data) => {
+          
               setError(data.error);
               setSuccess(data.success);
-              console.log(newCar.id)
-            })
-            .then( ()=> {
-              uploadImages()
-            })
+              setNewCar({...newCar, id: data.newId})
+              if(data.newId)
+              await uploadImages(data.newId);
+            }) 
     });
+
+    
+    
 }
 
 
@@ -439,8 +444,7 @@ const AddCarForm = () => {
             placeholder='Choose Your Model'
             className=''
             onChange={(e) => {
-              if(newCar)
-              newCar.title  = e.target.value ;
+              setNewCar({...newCar, title:e.target.value })
               // setTitle(e.target.value);
               getModels(e.target.value);
             }}
@@ -534,8 +538,8 @@ const AddCarForm = () => {
             placeholder='Choose Your Registration'
             className=''
             onChange={(e) => {
-              if(newCar)
-              newCar.registration  = e.target.value ;
+              setNewCar({...newCar, registration:e.target.value})
+              
               // setTitle(e.target.value);
               getRegistrations(e.target.value);
             }}

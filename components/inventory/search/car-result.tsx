@@ -1,4 +1,5 @@
 import React from 'react'
+import CarCard from './car-card';
 
 type CarResultProps = {
     keyword: string;
@@ -49,9 +50,14 @@ type CarResultProps = {
   }
 
 const CarResult = async (params : CarResultProps ) => {
-    const cars = await getData(params)
+    const cars: Car[]  = await getData(params)
   return (
-    <div>{JSON.stringify(cars)}</div>
+    <div className='space-y-2 md:space-y-4'>
+      
+        {cars.map((car: Car) => (
+            <CarCard car={car} key={car.id} /> // Ensure to add a unique key prop
+        ))}
+    </div>
   )
 }
 

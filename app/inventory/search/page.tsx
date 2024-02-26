@@ -1,6 +1,8 @@
 import ActiveFilters from '@/components/inventory/search/active-filters';
 import CarResult from '@/components/inventory/search/car-result';
+import Pagination from '@/components/inventory/search/search';
 import SideBarContent from '@/components/inventory/search/sidebar-context';
+import { Button } from '@/components/ui/button';
 import React from 'react'
 
 const InventorySearchPage = ({params, searchParams} : {params:any, searchParams: any}) => {
@@ -28,8 +30,10 @@ const InventorySearchPage = ({params, searchParams} : {params:any, searchParams:
                 transmission={transmission} bodyType={bodyType} adType={adType} page={page} 
                 make={make} model={model} 
                 />
-
-            <div className="w-full h-20 bg-primary"></div>
+        <div className="flex justify-end my-4 gap-4">
+          <Pagination page={page}/>
+          
+        </div>
         </section>
     </div>
   )
