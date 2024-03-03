@@ -1,15 +1,9 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -20,7 +14,7 @@ enum UserRole {
 }
 
 model User {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  id            String    @id @default(uuid()) @db.Uuid
   name          String?
   email         String?   @unique
   emailVerified DateTime?
@@ -40,8 +34,8 @@ model User {
 }
 
 model Account {
-  id                String  @id @default(auto()) @map("_id") @db.ObjectId
-  userId            String  @db.ObjectId
+  id                String  @id @default(uuid()) @db.Uuid
+  userId            String  @db.Uuid
   type              String
   provider          String
   providerAccountId String
@@ -58,7 +52,7 @@ model Account {
 }
 
 model Car {
-  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  id             String   @id @default(uuid()) @db.Uuid
   title          String?
   date           DateTime @default(now())
   featured       Boolean  @default(false)
@@ -77,13 +71,18 @@ model Car {
   registration   String
   body           String
   color          String
-  sellerID       String   @db.ObjectId
+  sellerID       String   @db.Uuid
   seller         User     @relation(fields: [sellerID], references: [id], onDelete: Cascade)
   sellerComments String
+
+  @@index([make])
+  @@index([model])
+  @@index([year])
+  @@index([title])
 }
 
 model DemandList {
-  id     String   @id @default(auto()) @map("_id") @db.ObjectId
+  id     String   @id @default(uuid()) @db.Uuid
   demand String
   date   DateTime @default(now())
   done   Boolean  @default(false)

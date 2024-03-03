@@ -15,8 +15,10 @@ export const privateRoutes = [
  * @type {string[]}
  */
 export const authRoutes = [
-    "/account/login",
-    "/account/register"
+    "/settings",
+    "/account",
+    "/inventory/add-car",
+    "/inventory/edit-car",
 ]
 
 export const apiAuthPrefix = "/api/auth"
