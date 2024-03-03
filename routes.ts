@@ -5,7 +5,8 @@
  */
 
 export const privateRoutes = [
-    "/settings"
+    "/settings",
+    "/account"
 ]
 
 /**
@@ -14,8 +15,8 @@ export const privateRoutes = [
  * @type {string[]}
  */
 export const authRoutes = [
-    "/auth/login",
-    "/auth/register"
+    "/account/login",
+    "/account/register"
 ]
 
 export const apiAuthPrefix = "/api/auth"
@@ -24,4 +25,4 @@ export const apiAuthPrefix = "/api/auth"
  * The route where the user will be redirected after login
  * @type {string}
  */
-export const DEFAULT_LOGIN_REDIRECT = "/settings"
+export const DEFAULT_LOGIN_REDIRECT = "/account"

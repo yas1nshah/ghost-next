@@ -1,6 +1,7 @@
 // pages/api/homeData.js
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { db } from "@/lib/db";
+import { NextResponse } from "next/server"
 
 
 
@@ -10,9 +11,9 @@ export async function GET() {
         const featuredCars = await db.car.findMany({ where: { featured: true, gpcar: false }, orderBy: { date: "desc" }, take: 8 });
         const recentCars = await db.car.findMany({ where: { featured: false, gpcar: false }, orderBy: { date: "desc" }, take: 8 });
 
-        return Response.json({ gpCars, featuredCars, recentCars });
+        return NextResponse.json({ gpCars, featuredCars, recentCars });
     } catch (error) {
         console.error("Error fetching home data:", error);
-        return Response.json({ message: 'Internal Server Error' });
+        return NextResponse.json({ message: 'Internal Server Error' });
     }
   }

@@ -1,4 +1,3 @@
-import GitHub from "next-auth/providers/github"
 import Credentials from "next-auth/providers/credentials"
 
 import type { NextAuthConfig } from "next-auth"
@@ -16,7 +15,11 @@ export default {
       if(validatedFields.success){
         const {email, password} = validatedFields.data
     
-        const user = await getUserByEmail(email)
+        let user = await getUserByEmail(email)
+        if(!user)
+        {
+          user = await getUserByPhone(email)
+        }
     
         if(!user || !user.password) return null;
         const passwordMatch = await bcrypt.compare(password, user.password)

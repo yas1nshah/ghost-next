@@ -3,6 +3,7 @@ import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { search } from '@/actions/fetch-models';
 import { useRouter } from 'next/navigation';
 import { Input } from '../ui/input';
+import { CarResult } from '@/types';
 
 
 
@@ -47,7 +48,7 @@ const SearchBar: React.FC = () => {
         if (cachedModels) {
             const parsedModels: CarResult[] = JSON.parse(cachedModels);
             searchResult = parsedModels.filter(model =>
-                model.make.toLowerCase().includes(value.toLowerCase())
+                model.title.toLowerCase().trim().includes(value.toLowerCase().trim())
             );
             setResult(searchResult);
         } else {
@@ -61,14 +62,14 @@ const SearchBar: React.FC = () => {
         const fetchMakes = async () => {
             try {
                 console.log("FETCHING MAKESSS");
-                const response = await fetch('/makes.json'); // Adjust the path as needed
+                const response = await fetch('/models.json'); // Adjust the path as needed
                 if (!response.ok) {
                     throw new Error('Failed to fetch makes');
                 }
                 const makesData = await response.json();
                 console.log(makesData);
                 // Store makes in local storage
-                localStorage.setItem('makes', JSON.stringify(makesData));
+                localStorage.setItem('models', JSON.stringify(makesData));
             } catch (error) {
                 console.error('Error fetching makes from file:', error);
             }

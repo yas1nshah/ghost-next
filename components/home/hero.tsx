@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import categories from '@/static-files/categories';
 import Gallery from "@/components/home/gallery";
@@ -21,31 +21,24 @@ function Hero() {
     ];
 
     const [menu, setMenu] = useState<number | null>(); // Provide a default value of null for the menu state
+    useEffect(() => {
+        function isDesktop() {
+            // Check if the device width is greater than a certain threshold (you can adjust this as needed)
+            return window.innerWidth > 768;
+        }
+
+        if (isDesktop()) {
+            // Find the button with id "filter" and trigger a click event
+            var filterButton = document.getElementById("categories");
+            if (filterButton) {
+                filterButton.click();
+            }
+        }
+    }, []);
 
     return (
         <div id='hero' className={`my-2`}>
-            <Script
-            id="show-categories"
-            strategy="lazyOnload"	
-            dangerouslySetInnerHTML={{
-                __html: `function isDesktop() {
-                    // Check if the device width is greater than a certain threshold (you can adjust this as needed)
-                    return window.innerWidth > 768;
-                }
-                
-                // Run the script with a 3-second delay
-                setTimeout(function() {
-                    // Check if the device is desktop
-                    if (isDesktop()) {
-                        // Find the button with id "filter" and trigger a click event
-                        var filterButton = document.getElementById("categories");
-                        if (filterButton) {
-                            filterButton.click();
-                        }
-                    }
-                }, 1000);`,
-            }}
-            />
+           
             <div id='hero-container' className='flex flex-wrap md:flex-nowrap gap-2 md:h-96 overflow-hidden'>
             <Accordion type="single" collapsible className='w-full order-2 md:order-1 md:w-1/4 md:mr-2'>
                 <AccordionItem value="categories">

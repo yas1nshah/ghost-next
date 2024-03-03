@@ -10,7 +10,7 @@ import formatTimeDifference from '@/lib/format-date'
 import { Skeleton } from "@/components/ui/skeleton"
 
 
-const CarCard = async (params: CarCardProps) => {
+const CarCard = async (params: any) => {
 
   const {
     id,

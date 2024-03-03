@@ -81,3 +81,10 @@ model Car {
   seller         User     @relation(fields: [sellerID], references: [id], onDelete: Cascade)
   sellerComments String
 }
+
+model DemandList {
+  id     String   @id @default(auto()) @map("_id") @db.ObjectId
+  demand String
+  date   DateTime @default(now())
+  done   Boolean  @default(false)
+}

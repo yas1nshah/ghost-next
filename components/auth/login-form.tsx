@@ -20,6 +20,7 @@ FormMessage
 import { Button } from '../ui/button'
 import FormError from '../form-error'
 import FormSuccess from '../form-success'
+import Link from 'next/link'
 
 const LoginForm = () => {
     const [isPending, startTransition] =  useTransition()
@@ -48,23 +49,22 @@ const LoginForm = () => {
         })
     }
   return (
-    <div >
+    <div className="w-full bg-card my-4 p-4 md:p-6 md:flex-grow md:max-w-sm rounded-xl ">
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}
-             className='space-y-6 p-4'
-            >
+            <form onSubmit={form.handleSubmit(onSubmit)}>
+                <h2 className='text-2xl font-semibold'>Welcome Back! 👋</h2>
                 <div className="space-y-4">
                     <FormField
                         control={form.control}
                         name='email'
                         render={({field}) =>(
                             <FormItem>
-                                <FormLabel>Email</FormLabel>
+                                <FormLabel>Email or Phone</FormLabel>
                                 <FormControl>
                                     <Input 
                                         {...field}
-                                        placeholder='user@example.com'
-                                        type='email'
+                                        placeholder='Enter email or phone'
+                                        type='text'
                                         disabled={isPending}
                                     />
                                 </FormControl>
@@ -101,6 +101,10 @@ const LoginForm = () => {
                         Login
                     </Button>
                 </div>
+                <p className='text-sm my-4'>
+                    {"Don't have an account?"}
+                    <Link className='text-primary mx-1' href="/account/register">Register Now</Link>
+                </p>
 
             </form>
         </Form>

@@ -54,30 +54,13 @@ const SideBarContent = (params : SideBarContentProps)=> {
     const [makeS, setMakeS] = useState(makeP)
     const [modelS, setModelS] = useState(modelP)
 
-    useEffect(() => {
-        function handleResize() {
-            const screenWidth = window.innerWidth;
-            if (screenWidth <= 768) { // Assuming 768px as the breakpoint for mobile screens
-                setDefaultValue('cars');
-            } else {
-                setDefaultValue('filters');
-            }
-        }
-
-        // Add event listener for window resize
-        window.addEventListener('resize', handleResize);
-
-        // Clean up event listener
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
-
     const handleSubmit = (e:any) => {
         e.preventDefault();
       
         // Build the dynamic search URL
         const searchParams = new URLSearchParams();
       
-        if (keywordS) searchParams.append('keyword', encodeURIComponent(keywordS));
+        if (keywordS) searchParams.append('keyword', keywordS);
         if (yearFromS) searchParams.append('yearFrom', yearFromS.toString() as string);
         if (yearToS) searchParams.append('yearTo', yearToS.toString() as string);
         if (priceFromS) searchParams.append('priceFrom', priceFromS.toString() as string);
@@ -86,8 +69,8 @@ const SideBarContent = (params : SideBarContentProps)=> {
         if (transmissionS) searchParams.append('transmission', transmissionS);
         if (bodyTypeS) searchParams.append('bodyType', bodyTypeS);
         if (adTypeS) searchParams.append('adType', adTypeS);
-        if (makeS) searchParams.append('make', encodeURIComponent(makeS));
-        if (modelS) searchParams.append('model', encodeURIComponent(modelS));
+        if (makeS) searchParams.append('make', makeS);
+        if (modelS) searchParams.append('model', modelS);
         // if (page) searchParams.append('page', page);
       
         const dynamicSearchURL = `/inventory/search?${searchParams.toString()}`;
@@ -95,10 +78,26 @@ const SideBarContent = (params : SideBarContentProps)=> {
         // Navigate to the dynamically generated search page URL
         router.replace(dynamicSearchURL);
       };
+
+      useEffect(() => {
+        function isDesktop() {
+            // Check if the device width is greater than a certain threshold (you can adjust this as needed)
+            return window.innerWidth > 768;
+        }
+
+        if (isDesktop()) {
+            // Find the button with id "filter" and trigger a click event
+            var filterButton = document.getElementById("filter");
+            if (filterButton) {
+                filterButton.click();
+            }
+        }
+    }, []);
+    
   
     return (
     <div>
-        <Script
+        {/* <Script
             id="show-banner"
             strategy="lazyOnload"	
             dangerouslySetInnerHTML={{
@@ -119,7 +118,7 @@ const SideBarContent = (params : SideBarContentProps)=> {
                     }
                 }, 1000);`,
             }}
-            />
+            /> */}
     
         <Accordion  type="single" className="data-state-open" collapsible>
             <AccordionItem value="filters">

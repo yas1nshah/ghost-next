@@ -97,7 +97,7 @@ const Header = () => {
       <nav className='hidden md:block px-2 bg-primary '>
         <ul className='flex justify-center gap-6 max-w-6xl mx-auto'>
           {menu.map((item, index) => (
-            <li key={index} className='text-base font-semibold text-base-100 hover:text-black transition ease-in'>
+            <li key={index} className='text-base font-semibold text-background hover:text-primary-foreground transition ease-in'>
               <Link href={item.link}>{item.name}</Link>
             </li>
           ))} 

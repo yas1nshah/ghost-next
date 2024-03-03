@@ -19,10 +19,12 @@ import { useRouter } from 'next/navigation'
 import formatAmount from '@/lib/foramt-price'
 import { postCar, saveDocumentInteraction } from '@/actions/post-car'
 import { Button } from '@/components/ui/button'
-import { CarSchema } from '@/schemas'
+import { CarFinal, CarSchema } from '@/schemas'
 import FormError from '@/components/form-error'
 import FormSuccess from '@/components/form-success'
 import { Readable } from 'stream';
+import { AddCarSchema, CarResult, City } from '@/types'
+
 
 
 
@@ -39,16 +41,12 @@ const AddCarForm = () => {
     
   const [gallery, setGallery] = useState<Blob[]>([]);
 
-  const [newCar, setNewCar] = useState<Car>({
+  const [newCar, setNewCar] = useState<CarFinal>({
     id: "",
     title: "",
     galleryIndex: 0,
     gallery: [],
-    date : undefined,
-    
-    featuredCar: false,
-    gpCar: false,
-
+   
     make: "",
     model: "",
     year: 0,
@@ -65,7 +63,7 @@ const AddCarForm = () => {
     color: "",
   
     sellerID: "",
-    seller: null, // Assuming any type can be null
+
     sellerComments: "",
 })
 
@@ -349,7 +347,7 @@ const AddCarForm = () => {
           
               setError(data.error);
               setSuccess(data.success);
-              setNewCar({...newCar, id: data.newId})
+              setNewCar({...newCar, id: data.newId as string})
               if(data.newId)
               await uploadImages(data.newId);
             }) 

@@ -10,10 +10,16 @@ import {
 } from "@/components/ui/carousel"
 import CarCard from '@/components/common/carCard'
 import formatAmount from '@/lib/foramt-price'
+import { Car } from '@prisma/client'
+
+type CarCarosel =  {
+  title : string;
+  see_more : string;
+  cars : Car[];
+}
 
 
-
-const CarCarosel = (params: CarCarosel) => {
+const CarCaroselComp = (params:  CarCarosel) => {
   return (
     <div className='my-4'>
       <div className="flex justify-between items-center">
@@ -30,9 +36,28 @@ const CarCarosel = (params: CarCarosel) => {
       className="w-full relative mb-28"
     >
       <CarouselContent>
-          
-            {params.cars.map((car, index)=>(
-            <CarouselItem key={0} className="md:basis-1/4 basis-1/2 ">
+          {
+            Array.from({length: params.cars.length}).map((_, index)=> (
+              <CarouselItem key={index} className="md:basis-1/4 basis-1/2 ">
+              <CarCard
+              key={index}
+              id={params.cars[index].id as string}
+              galleryIndex={params.cars[index].galleryIndex}
+              title={`${params.cars[index].make} ${params.cars[index].model} ${params.cars[index].year}`}
+              year={params.cars[index].year}
+              engine={params.cars[index].engine}
+              mileage={`${params.cars[index].mileage.toLocaleString()}`}
+              imgs={params.cars[index].gallery}
+              price={params.cars[index].price}
+              registration={params.cars[index].registration}
+              time={params.cars[index].date }
+              />
+            </CarouselItem>
+            ))
+          }
+            {
+            params.cars.map((car, index)=>(
+            <CarouselItem key={index} className="md:basis-1/4 basis-1/2 ">
               <CarCard
               key={index}
               id={car.id as string}
@@ -44,7 +69,7 @@ const CarCarosel = (params: CarCarosel) => {
               imgs={car.gallery}
               price={car.price}
               registration={car.registration}
-              time={car.date as string}
+              time={car.date }
               />
             </CarouselItem>
             ))}
@@ -61,4 +86,4 @@ const CarCarosel = (params: CarCarosel) => {
   )
 }
 
-export default CarCarosel
+export default CarCaroselComp

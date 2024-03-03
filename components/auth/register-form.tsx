@@ -11,6 +11,8 @@ import { RegisterSchema } from "@/schemas"
 import {Input}  from '@/components/ui/input'
 import { Switch } from "@/components/ui/switch"
 
+import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import {
 Form,
 FormControl,
@@ -30,6 +32,9 @@ const RegisterForm = () => {
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
 
+    const [confirmPass, setconfirmPass] = useState("")
+    const router = useRouter()
+
     const form = useForm<z.infer<typeof RegisterSchema>>({
         resolver: zodResolver(RegisterSchema),
         defaultValues: {
@@ -47,20 +52,32 @@ const RegisterForm = () => {
         setError("")
         setSuccess("")
 
+        if(form.getValues().password != confirmPass)
+        {
+            setError("Passwords did not match")
+            return
+        }
+
         startTransition(async()=>{
             register(values)
                 .then( (data)=>{
                     setError(data.error)
                     setSuccess(data.success)
+                    if(data.success)
+                    {
+                        router.replace("/account")
+                    }
+
                 })
         })
     }
   return (
-    <div className="bg-white">
+    <div className="w-full my-4 bg-card p-4 md:p-6 md:flex-grow md:max-w-sm rounded-xl ">
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}
              className='space-y-6'
             >
+                <h2 className='text-2xl font-semibold'>Welcome onBoard! 👋</h2>
                 <div className="space-y-4">
                     <FormField
                         control={form.control}
@@ -88,7 +105,7 @@ const RegisterForm = () => {
                                 <FormControl>
                                     <Input 
                                         {...field}
-                                        placeholder='user@example.com'
+                                        placeholder='Your Name'
                                         disabled={isPending}
                                     />
                                 </FormControl>
@@ -123,7 +140,7 @@ const RegisterForm = () => {
                                 <FormControl>
                                     <Input 
                                         {...field}
-                                        placeholder='XXX XXXXXXX'
+                                        placeholder='323 12345678'
                                         disabled={isPending}
                                     />
                                 </FormControl>
@@ -169,24 +186,16 @@ const RegisterForm = () => {
                         )}
                     />
 
-                    <FormField
-                        control={form.control}
-                        name='password'
-                        render={({field}) =>(
-                            <FormItem>
+<FormItem>
                                 <FormLabel>Confirm Password</FormLabel>
-                                <FormControl>
-                                    <Input 
-                                        {...field}
+                                <Input 
+                                        onChange={(e)=>setconfirmPass(e.target.value)}
                                         placeholder='********'
                                         type='password'
                                         disabled={isPending}
                                     />
-                                </FormControl>
                                 <FormMessage/>
                             </FormItem>
-                        )}
-                    />
                     <FormError message={error}/>
                     <FormSuccess message={success}/>
                     <Button
@@ -197,7 +206,10 @@ const RegisterForm = () => {
                         Login
                     </Button>
                 </div>
-
+                <p className='text-sm'>
+                    Alredy Registered?
+                    <Link className='text-primary mx-1' href="/account/login">Login Now</Link>
+                </p>
             </form>
         </Form>
 

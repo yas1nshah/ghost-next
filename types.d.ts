@@ -1,6 +1,7 @@
+import { Car } from '@prisma/client';
 
 
-interface Car {
+interface AddCarSchema {
     title: string,
     id : string | undefined,
 
@@ -50,13 +51,13 @@ interface CarCardProps {
     time: string; 
   }
 
-interface CarCarosel {
+type CarCarosel =  {
     title : string;
     see_more : string;
     cars : Car[];
 }
 
-interface CarResult {
+type CarResult =  {
   id: number;
   make: string;
   model: string;
@@ -65,3 +66,4 @@ interface CarResult {
   engineCapacity: string;
   bodyType: string;
 }
+

@@ -1,9 +1,36 @@
+
 import ActiveFilters from '@/components/inventory/search/active-filters';
 import CarResult from '@/components/inventory/search/car-result';
 import Pagination from '@/components/inventory/search/search';
 import SideBarContent from '@/components/inventory/search/sidebar-context';
 import { Button } from '@/components/ui/button';
 import React from 'react'
+
+export async function generateMetadata(
+  { params, searchParams } : any
+) {
+
+  const {make, model , keyword} = searchParams;
+  let title
+  let desc
+  
+  if(make && model)
+  {
+     title = `${make} ${model} for Sale in Pakistan`
+     desc = `Find the best ${make} ${model} for Sale in Pakistan. Ghost Protocols offers best car Listings for ${make} ${model}. Post your Car for FREE at Ghostprotocols Now.`
+  }
+  else{
+     title = `${keyword} for Sale in Pakistan`
+     desc = `Find the best ${keyword}for Sale in Pakistan. Ghost Protocols offers best car Listings for ${keyword}. Post your Car for FREE at Ghostprotocols Now.`
+
+  }
+ 
+  return {
+    title: title,
+    description: desc
+    
+  }
+}
 
 const InventorySearchPage = ({params, searchParams} : {params:any, searchParams: any}) => {
     const {make, model , keyword, yearFrom, yearTo, priceFrom, priceTo, color, transmission, bodyType, adType, page  } = searchParams;

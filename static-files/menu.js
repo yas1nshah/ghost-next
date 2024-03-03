@@ -1,11 +1,11 @@
 const menu = [
     {
         "name": "Inventory",
-        "link" : "/search"
+        "link" : "/inventory/search"
     },
     {
         "name": "GP Cars",
-        "link" : "/search?adType=ghost-yard"
+        "link" : "/inventory/search?adType=ghost-yard"
     },
     {
         "name": "Add Car",

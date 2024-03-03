@@ -12,6 +12,8 @@ declare module "next-auth" {
     /** The user's postal address. */
     role: string
     adLimit : number
+    dealer: boolean
+    date_joined: Date
   }
 }
 
@@ -29,13 +31,15 @@ export const {
         session.user.id = token.sub
         session.user.role = token.role as string
         session.user.adLimit = token.adLimit as number
-
+        session.user.date_joined = token.date_joined as Date 
 
       }
       return session
     },
 
-    async jwt({ token }) {
+    async jwt({ user, trigger, session, token }) {
+      
+      
       if(!token.sub) return token;
 
       const existingUser = await getUserById(token.sub)
@@ -44,11 +48,16 @@ export const {
       
       token.role = existingUser.role
       token.adLimit = existingUser.ad_limit
+      token.dealer = existingUser.dealer
+      token.date_joined = existingUser.date_joined
       
       return token
     }
   },
   adapter: PrismaAdapter(db),
   session: { strategy: "jwt" },
+  
+  trustHost: true,
+  
   ...authConfig,
 })
