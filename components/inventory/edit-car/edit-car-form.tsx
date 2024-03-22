@@ -25,6 +25,9 @@ import { Readable } from 'stream';
 import { Car } from '@prisma/client'
 import { AddCarSchema, CarResult, City } from '@/types'
 import { CarFinal, CarSchema } from '@/schemas'
+import SelectModel from './model'
+import SelectCity from './city'
+import SelectRegistration from './registration'
 
 
 interface FileBlob extends Readable {
@@ -452,7 +455,9 @@ const EditCarForm = ({result}: any) => {
         {/* Select Location */}
         <div className='relative'>
           <span className='label-text-alt'>Location</span>
-          <Input
+          <SelectCity newCar={newCar} setNewCar={setNewCar}/>
+
+          {/* <Input
             type='text'
             placeholder='Choose Your Location'
             className=''
@@ -492,13 +497,14 @@ const EditCarForm = ({result}: any) => {
                   <p className="text-center">No Cars Found <span className='text-secondary'><Link href={'/'}>Report</Link></span></p>
               }
             </div>
-          }
+          } */}
         </div>
 
         {/* Select Model */}
         <div className='relative'>
           <span className='label-text-alt'>Model</span>
-          <Input
+          <SelectModel newCar={newCar} setNewCar={setNewCar}/>
+          {/* <Input
             type='text'
             placeholder='Choose Your Model'
             className=''
@@ -552,7 +558,7 @@ const EditCarForm = ({result}: any) => {
                   <p className="text-center">No Cars Found <span className='text-secondary'><Link href={'/'}>Report</Link></span></p>
               }
             </div>
-          }
+          } */}
         </div>
 
         {/* Year and Price */}
@@ -564,6 +570,8 @@ const EditCarForm = ({result}: any) => {
                 type='number'
                 placeholder='Enter Year'
                 value={newCar.year }
+                min={1975}
+                max={2024}
                 onChange={(e)=>{
                   setNewCar({...newCar, year: parseInt(e.target.value)})
                 }}
@@ -592,6 +600,8 @@ const EditCarForm = ({result}: any) => {
         {/* Select Registration */}
         <div className='relative'>
           <span className='label-text-alt'>Registration</span>
+          <SelectRegistration newCar={newCar} setNewCar={setNewCar}/>
+{/* 
           <Input
             type='text'
             placeholder='Choose Your Registration'
@@ -629,7 +639,7 @@ const EditCarForm = ({result}: any) => {
                   <p className="text-center">No Cars Found <span className='text-secondary'><Link href={'/'}>Report</Link></span></p>
               }
             </div>
-          }
+          } */}
         </div>
 
         {/* Color and Mileage */}
@@ -642,9 +652,18 @@ const EditCarForm = ({result}: any) => {
                   <SelectValue placeholder="Theme" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Black">Black</SelectItem>
+                <SelectItem value="Black">Black</SelectItem>
                   <SelectItem value="White">White</SelectItem>
                   <SelectItem value="Red">Red</SelectItem>
+                  <SelectItem value="Silver">Silver</SelectItem>
+                  <SelectItem value="Blue">Blue</SelectItem>
+                  <SelectItem value="Gray">Gray</SelectItem>
+                  <SelectItem value="Green">Green</SelectItem>
+                  <SelectItem value="Yellow">Yellow</SelectItem>
+                  <SelectItem value="Orange">Orange</SelectItem>
+                  <SelectItem value="Brown">Brown</SelectItem>
+                  <SelectItem value="Beige">Beige</SelectItem>
+                  <SelectItem value="Other">Other</SelectItem>
                 </SelectContent>
               </Select>
 

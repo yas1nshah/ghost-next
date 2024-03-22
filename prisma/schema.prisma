@@ -26,9 +26,10 @@ model User {
 
   role UserRole @default(USER)
 
-  phone    String  @unique
-  dealer   Boolean @default(false)
-  ad_limit Int     @default(1)
+  phone          String  @unique
+  dealer         Boolean @default(false)
+  ad_limit       Int     @default(1)
+  featured_limit Int     @default(0)
 
   date_joined DateTime @default(now())
 }
@@ -74,6 +75,8 @@ model Car {
   sellerID       String   @db.Uuid
   seller         User     @relation(fields: [sellerID], references: [id], onDelete: Cascade)
   sellerComments String
+
+  active Boolean @default(false)
 
   @@index([make])
   @@index([model])

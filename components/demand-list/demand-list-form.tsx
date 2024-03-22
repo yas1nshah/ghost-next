@@ -51,7 +51,7 @@ const DemandListForm = () => {
 
                     if(data.success)
                     {
-                        router.replace("/demand-list")
+                        router.replace("/admin")
                     }
                 })
         })

@@ -1,3 +1,4 @@
+
 import React from 'react'
 import Link from 'next/link'
 import { Button } from '../ui/button'
@@ -12,6 +13,7 @@ import CarCard from '@/components/common/carCard'
 import formatAmount from '@/lib/foramt-price'
 import { Car } from '@prisma/client'
 
+
 type CarCarosel =  {
   title : string;
   see_more : string;
@@ -22,6 +24,7 @@ type CarCarosel =  {
 const CarCaroselComp = (params:  CarCarosel) => {
   return (
     <div className='my-4'>
+      
       <div className="flex justify-between items-center">
         <h2 className="font-semibold text-xl md:text-2xl py-4">{params.title}</h2>
         <Button className='' size={'sm'} variant={'outline'} >
@@ -32,7 +35,10 @@ const CarCaroselComp = (params:  CarCarosel) => {
     <Carousel
       opts={{
         align: "start",
+        loop: true
       }}
+      
+     
       className="w-full relative mb-28"
     >
       <CarouselContent>
@@ -55,29 +61,13 @@ const CarCaroselComp = (params:  CarCarosel) => {
             </CarouselItem>
             ))
           }
-            {
-            params.cars.map((car, index)=>(
-            <CarouselItem key={index} className="md:basis-1/4 basis-1/2 ">
-              <CarCard
-              key={index}
-              id={car.id as string}
-              galleryIndex={car.galleryIndex}
-              title={`${car.make} ${car.model} ${car.year}`}
-              year={car.year}
-              engine={car.engine}
-              mileage={`${car.mileage.toLocaleString()}`}
-              imgs={car.gallery}
-              price={car.price}
-              registration={car.registration}
-              time={car.date }
-              />
-            </CarouselItem>
-            ))}
+            
       </CarouselContent>
-
-      <div className="absolute mt-10 bg-black top-full right-0 mr-16">
-        <CarouselPrevious className='' />
-        <CarouselNext  className=''/>
+   
+      <div className="absolute flex h-10 mt-6 top-full right-0  mr-4 gap-4">
+          <CarouselPrevious className='' />
+          <CarouselNext  className=''/>
+        
       </div>
     </Carousel>
 

@@ -29,13 +29,13 @@ export async function middleware(req: NextRequest) {
         }
     }
 
-  if(isAuthRoute)
-  {
-    if (session?.user)
-    {
-      return Response.redirect(new URL( DEFAULT_LOGIN_REDIRECT, nextUrl))
-    }
-  }
+  // if(isAuthRoute)
+  // {
+  //   if (session?.user)
+  //   {
+  //     return Response.redirect(new URL( DEFAULT_LOGIN_REDIRECT, nextUrl))
+  //   }
+  // }
 
 }
 

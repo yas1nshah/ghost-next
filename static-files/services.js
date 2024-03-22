@@ -2,7 +2,7 @@ const services = [
 
     {
         "subTitle": "ENCHANTING SALES SORCERY",
-        "title":"We Sell, You Win",
+        "title":"Sell My Ride ",
         "details":"Experience the magic of hassle-free car sales.",
         "image":"/sell-now.webp",
         "link":"/services"
@@ -30,7 +30,7 @@ const services = [
     },
     {
         "subTitle": "AUTOMOTIVE DELIGHTS",
-        "title":"Goodies Subscription",
+        "title":"Goodies ",
         "details":"Uncover a world of bountiful automotive surprises.",
         "image":"/goodies.webp",
         "link":"/services"

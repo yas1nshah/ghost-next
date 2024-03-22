@@ -9,6 +9,7 @@ import { Toaster } from "@/components/ui/sonner"
 import Footer from "@/components/footer/footer";
 
 const inter = Inter({ subsets: ["latin"] });
+import Navbar from '@/components/home/navbar';
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -29,7 +30,9 @@ export default function  RootLayout({
             enableSystem
             disableTransitionOnChange
           >
+          
           <Header/>
+          {/* <Navbar/> */}
           <main className="main">
             {children}
           </main>

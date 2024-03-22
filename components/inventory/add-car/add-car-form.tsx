@@ -24,6 +24,9 @@ import FormError from '@/components/form-error'
 import FormSuccess from '@/components/form-success'
 import { Readable } from 'stream';
 import { AddCarSchema, CarResult, City } from '@/types'
+import SelectModel from './model'
+import SelectCity from './city'
+import SelectRegistration from './registration'
 
 
 
@@ -49,8 +52,8 @@ const AddCarForm = () => {
    
     make: "",
     model: "",
-    year: 0,
-    price: 0,
+    year: 2000,
+    price: 100000,
   
     location: "",
     mileage: 0,
@@ -60,7 +63,7 @@ const AddCarForm = () => {
     engineCapacity: "",
     registration: "",
     body: "",
-    color: "",
+    color: "Black",
   
     sellerID: "",
 
@@ -334,12 +337,36 @@ const AddCarForm = () => {
       
   };
 
+  async function saveImages(gallery:any, newCar:any, id:any) {
+    for (let index = 0; index < gallery.length; index++) {
+        console.log("IMAGE");
+        const image = gallery[index];
+        const makeModelYear = `${newCar.make}-${newCar.model}-${newCar.year}`; // Assuming make and model are available
+        const imageName = `${makeModelYear}-${id}-${index}.webp`;
+        const data = new FormData();
+        data.append('img', new File([image], imageName, { type: image.type }));
+
+        try {
+            const result = await saveDocumentInteraction(data);
+            setError(result.error ? result.error + index : '');
+            setSuccess(result.success ? result.success + index : '');
+            console.log("POSTED");
+        } catch (error) {
+            console.error('Error saving image:', error);
+        }
+    }
+}
+
   const onSubmit =  (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Prevent the default form submission behavior
 
     setError("");
     setSuccess("");
-
+    
+    if(newCar.make === '' && newCar.model ==='' && newCar.location=='' && newCar.registration ==''){
+      setError("Please fill out all the fields");
+      return
+    }
 
     startTransition(async () => {
         postCar(newCar)
@@ -349,8 +376,9 @@ const AddCarForm = () => {
               setSuccess(data.success);
               setNewCar({...newCar, id: data.newId as string})
               if(data.newId)
-              await uploadImages(data.newId);
-            }) 
+              await saveImages(gallery, newCar, data.newId);
+              // await uploadImages(data.newId);
+            }).then(()=>router.replace("/account"))  
     });
 
     
@@ -382,7 +410,7 @@ const AddCarForm = () => {
                 
             </div>
           )}
-          <Input type='file' multiple={true} onChange={handleFileChange}/>
+          <Input className='text-lg' type='file' multiple={true} onChange={handleFileChange}/>
         </div>
         {
           JSON.stringify(newCar.gallery)
@@ -391,53 +419,134 @@ const AddCarForm = () => {
         {/* Select Location */}
         <div className='relative'>
           <span className='label-text-alt'>Location</span>
-          <Input
-            type='text'
-            placeholder='Choose Your Location'
-            className=''
-            onChange={(e) => {
-              if(newCar)
-              newCar.location  = e.target.value ;
-              // setTitle(e.target.value);
-              getCities(e.target.value);
-            }}
-            onFocus={() => setShowCity(true)}
-            onBlur={() => setShowCity(false)}
-            value={newCar?.location}
-          />
-
-          {
-            showCity &&
-            <div  className="p-4 my-2 absolute top-full left-0 z-20 bg-white dark:bg-black drop-shadow-xl w-full overflow-hidden overflow-y-scroll h-full md:h-64 rounded-xl">
-              {
-                cityData.length > 0 ?
-                  cityData.map((city, index) => (
-                    <div key={index} className='p-2'
-                      onMouseDown={() => {
-                        if(newCar)
-                        {
-                          newCar.location = city.name;
-                        }
-                        setShowCity(false);
-                      }}
-                    >
-                   
-                      <h4 className="text-base md:text-lg font-semibold">
-                        {city.name}
-                      </h4>
-                      <hr className='dark:opacity-35 opacity-100' />
-                    </div>
-                  )) :
-                  <p className="text-center">No Cars Found <span className='text-secondary'><Link href={'/'}>Report</Link></span></p>
-              }
-            </div>
-          }
+          <SelectCity newCar={newCar} setNewCar={setNewCar}/>
+          
         </div>
 
         {/* Select Model */}
         <div className='relative'>
           <span className='label-text-alt'>Model</span>
-          <Input
+          <SelectModel newCar={newCar} setNewCar={setNewCar}/>
+          
+        </div>
+
+        {/* Year and Price */}
+        <div className="flex justify-between flex-col md:flex-row gap-4 w-full">
+            {/* Select Year */}
+            <div className='relative w-full'>
+              <span className='label-text-alt'>Year</span>
+              <Input
+                type='number'
+                placeholder='Enter Year'
+                value={newCar.year }
+                className='text-lg'
+                min={1975}
+                max={2024}
+                onChange={(e)=>{
+                  setNewCar({...newCar, year: parseInt(e.target.value)})
+                }}
+              />
+
+            </div>
+
+            {/* Select Price */}
+            <div className='relative w-full'>
+              <span className='label-text-alt'>Price</span>
+              <Input
+                type='number'
+                placeholder='Enter Price'
+                className='text-lg'
+                value={newCar.price }
+                onChange={(e)=>{
+                  setNewCar({...newCar, price: parseInt(e.target.value)})
+                }}
+
+              />
+            
+              <p className='label-text-alt mb-4 mt-2 text-end'>{formatAmount(newCar.price) } </p>
+
+            </div>
+        </div>
+
+        {/* Select Registration */}
+        <div className='relative'>
+          <span className='label-text-alt'>Registration</span>
+          <SelectRegistration newCar={newCar} setNewCar={setNewCar}/>
+          
+        </div>
+
+        {/* Color and Mileage */}
+        <div className="flex justify-between flex-col md:flex-row gap-4 w-full">
+            {/* Select Color */}
+            <div className='relative w-full'>
+              <span className='label-text-alt'>Color</span>
+              <Select defaultValue='Black' onValueChange={(e)=>setNewCar({...newCar,color: e})}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Theme" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Black">Black</SelectItem>
+                  <SelectItem value="White">White</SelectItem>
+                  <SelectItem value="Red">Red</SelectItem>
+                  <SelectItem value="Silver">Silver</SelectItem>
+                  <SelectItem value="Blue">Blue</SelectItem>
+                  <SelectItem value="Gray">Gray</SelectItem>
+                  <SelectItem value="Green">Green</SelectItem>
+                  <SelectItem value="Yellow">Yellow</SelectItem>
+                  <SelectItem value="Orange">Orange</SelectItem>
+                  <SelectItem value="Brown">Brown</SelectItem>
+                  <SelectItem value="Beige">Beige</SelectItem>
+                  <SelectItem value="Other">Other</SelectItem>
+                </SelectContent>
+              </Select>
+
+
+            </div>
+
+            {/* Select Mileage */}
+            <div className='relative w-full'>
+              <span className='label-text-alt'>Mileage</span>
+              <Input
+                type='number'
+                placeholder='Enter Mileage'
+                className='text-lg'
+                value={newCar.mileage }
+                onChange={(e)=>{
+                  setNewCar({...newCar, mileage: parseInt(e.target.value)})
+                }}
+              />
+              <p className='label-text-alt mb-4 mt-2 text-end'>{newCar.mileage.toLocaleString() } km </p>
+
+            </div>
+        </div>
+
+        {/* Select Color */}
+        <div className='relative w-full'>
+              <span className='label-text-alt'>Seller Comments</span>
+              <Textarea onChange={(e)=>setNewCar({...newCar, sellerComments : e.target.value})} placeholder="Type your message here." />
+        </div>
+        
+        <FormError message={error}/>
+        <FormSuccess message={success}/>
+
+        <Button
+        type='submit'
+        >
+          Post Car
+        </Button>
+        </form>
+
+    </div>
+  )
+}
+
+export default AddCarForm
+
+
+
+
+
+{/* <Input
             type='text'
             placeholder='Choose Your Model'
             className=''
@@ -491,47 +600,52 @@ const AddCarForm = () => {
                   <p className="text-center">No Cars Found <span className='text-secondary'><Link href={'/'}>Report</Link></span></p>
               }
             </div>
-          }
-        </div>
+          } */}
 
-        {/* Year and Price */}
-        <div className="flex justify-between flex-col md:flex-row gap-4 w-full">
-            {/* Select Year */}
-            <div className='relative w-full'>
-              <span className='label-text-alt'>Year</span>
-              <Input
-                type='number'
-                placeholder='Enter Year'
-                value={newCar.year }
-                onChange={(e)=>{
-                  setNewCar({...newCar, year: parseInt(e.target.value)})
-                }}
-              />
 
-            </div>
+          // <Input
+          //   type='text'
+          //   placeholder='Choose Your Location'
+          //   className=''
+          //   onChange={(e) => {
+          //     if(newCar)
+          //     newCar.location  = e.target.value ;
+          //     // setTitle(e.target.value);
+          //     getCities(e.target.value);
+          //   }}
+          //   onFocus={() => setShowCity(true)}
+          //   onBlur={() => setShowCity(false)}
+          //   value={newCar?.location}
+          // />
 
-            {/* Select Price */}
-            <div className='relative w-full'>
-              <span className='label-text-alt'>Price</span>
-              <Input
-                type='number'
-                placeholder='Enter Price'
-                value={newCar.price }
-                onChange={(e)=>{
-                  setNewCar({...newCar, price: parseInt(e.target.value)})
-                }}
+          // {
+          //   showCity &&
+          //   <div  className="p-4 my-2 absolute top-full left-0 z-20 bg-white dark:bg-black drop-shadow-xl w-full overflow-hidden overflow-y-scroll h-full md:h-64 rounded-xl">
+          //     {
+          //       cityData.length > 0 ?
+          //         cityData.map((city, index) => (
+          //           <div key={index} className='p-2'
+          //             onMouseDown={() => {
+          //               if(newCar)
+          //               {
+          //                 newCar.location = city.name;
+          //               }
+          //               setShowCity(false);
+          //             }}
+          //           >
+                   
+          //             <h4 className="text-base md:text-lg font-semibold">
+          //               {city.name}
+          //             </h4>
+          //             <hr className='dark:opacity-35 opacity-100' />
+          //           </div>
+          //         )) :
+          //         <p className="text-center">No Cars Found <span className='text-secondary'><Link href={'/'}>Report</Link></span></p>
+          //     }
+          //   </div>
+          // }
 
-              />
-            
-              <p className='label-text-alt mb-4 mt-2 text-end'>{formatAmount(newCar.price) } </p>
-
-            </div>
-        </div>
-
-        {/* Select Registration */}
-        <div className='relative'>
-          <span className='label-text-alt'>Registration</span>
-          <Input
+{/* <Input
             type='text'
             placeholder='Choose Your Registration'
             className=''
@@ -568,62 +682,4 @@ const AddCarForm = () => {
                   <p className="text-center">No Cars Found <span className='text-secondary'><Link href={'/'}>Report</Link></span></p>
               }
             </div>
-          }
-        </div>
-
-        {/* Color and Mileage */}
-        <div className="flex justify-between flex-col md:flex-row gap-4 w-full">
-            {/* Select Color */}
-            <div className='relative w-full'>
-              <span className='label-text-alt'>Color</span>
-              <Select defaultValue='Black' onValueChange={(e)=>setNewCar({...newCar,color: e})}>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Theme" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Black">Black</SelectItem>
-                  <SelectItem value="White">White</SelectItem>
-                  <SelectItem value="Red">Red</SelectItem>
-                </SelectContent>
-              </Select>
-
-
-            </div>
-
-            {/* Select Mileage */}
-            <div className='relative w-full'>
-              <span className='label-text-alt'>Mileage</span>
-              <Input
-                type='number'
-                placeholder='Enter Mileage'
-                value={newCar.mileage }
-                onChange={(e)=>{
-                  setNewCar({...newCar, mileage: parseInt(e.target.value)})
-                }}
-              />
-              <p className='label-text-alt mb-4 mt-2 text-end'>{newCar.mileage.toLocaleString() } km </p>
-
-            </div>
-        </div>
-
-        {/* Select Color */}
-        <div className='relative w-full'>
-              <span className='label-text-alt'>Seller Comments</span>
-              <Textarea onChange={(e)=>setNewCar({...newCar, sellerComments : e.target.value})} placeholder="Type your message here." />
-        </div>
-        
-        <FormError message={error}/>
-        <FormSuccess message={success}/>
-
-        <Button
-        type='submit'
-        >
-          Post Car
-        </Button>
-        </form>
-
-    </div>
-  )
-}
-
-export default AddCarForm
+          }           */}
