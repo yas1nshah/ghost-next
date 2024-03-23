@@ -4,6 +4,7 @@ interface FilterConditions {
     location?: { equals: string };
     make?: { equals?: string, contains: string, mode: any };
     model?: { equals?: string, contains: string, mode: any};
+    color?: { equals?: string, contains: string, mode: any};
     registration?: { equals: string };
     transmission?: { equals: boolean };
     year?: { gte?: number; lte?: number };
@@ -26,10 +27,12 @@ export async function getSearchCars(
     price_To: string = 'All',
     registration: string = 'All',
     transmission: string = 'All',
+    color: string = 'All',
     body_type: string = 'All',
-    ad_type: string = 'All',
+    adType: string = 'All',
     page: number = 1
 ) {
+   
     try {
         let filter_conditions : FilterConditions = {};
 
@@ -45,8 +48,13 @@ export async function getSearchCars(
         if (registration !== 'All') {
             filter_conditions.registration = { equals: registration };
         }
+       
+        if (color !== 'All') {
+            filter_conditions.color = { contains: color, mode: 'insensitive' };
+        }
+
         if (transmission !== 'All') {
-            filter_conditions.transmission = { equals: (transmission.toLowerCase() === 'automatic') };
+            filter_conditions.transmission = { equals: (transmission.toLowerCase() === 'auto') };
         }
         if (year_from !== 'All') {
             filter_conditions.year = { gte: parseInt(year_from, 10) };
@@ -94,12 +102,13 @@ export async function getSearchCars(
         if (body_type !== 'All') {
             filter_conditions.body = { equals: body_type, mode: 'insensitive' };
         }
-        if (ad_type !== 'All') {
-            if (ad_type === "ghost-yard") {
+       
+        if (adType !== 'All') {
+            if (adType === "ghost-yard") {
                 filter_conditions.gpcar = { equals: true };
-            } else if (ad_type === "featured") {
+            } else if (adType === "featured") {
                 filter_conditions.featured = { equals: true };
-            } else if (ad_type === "free-listing") {
+            } else if (adType === "free-listing") {
                 filter_conditions = {
                     ...filter_conditions,
                     featured: { equals: false },
@@ -118,6 +127,7 @@ export async function getSearchCars(
             skip: starting_index,
             take: items_per_page
         });
+        // console.log(cars)
 
         return cars;
     } catch (error) {

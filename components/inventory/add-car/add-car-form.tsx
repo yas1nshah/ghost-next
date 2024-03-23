@@ -482,7 +482,7 @@ const AddCarForm = () => {
               <span className='label-text-alt'>Color</span>
               <Select defaultValue='Black' onValueChange={(e)=>setNewCar({...newCar,color: e})}>
                 <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Theme" />
+                  <SelectValue placeholder="Color" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="Black">Black</SelectItem>

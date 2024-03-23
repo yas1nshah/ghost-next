@@ -38,8 +38,8 @@ const Account = async() => {
 
         <div className="bg-card rounded-xl p-4 flex justify-between items-center ">
             <div>
-                <h3 className='md:text-lg'>Welcome Back!! 👋</h3>
-                <h2 className='md:text-3xl font-semibold'>{session?.user?.name}</h2>
+                <h3 className='text-sm md:text-lg'>Welcome Back!! 👋</h3>
+                <h2 className='text-xl md:text-3xl font-semibold'>{session?.user?.name}</h2>
                 <Button className='my-2' variant={'outline'} size={'xs'}>Log out</Button>
             </div>
             <Avatar className='w-24 h-24 mx-4'>
@@ -50,29 +50,29 @@ const Account = async() => {
 
         <div className="bg-card rounded-xl p-4 flex gap-4">
             <div className="space-y-2 py-2 flex-grow">
-                    <p className="text-sm opacity-50">Account Type</p>
+                    <p className="text-xs md:text-sm opacity-50">Account Type</p>
                     <div className="flex justify-between items-center">
-                        <h2 className="Price text-xl md:text-2xl font-extrabold"> 
+                        <h2 className="Price text-lg md:text-2xl font-extrabold"> 
                         {!session?.user?.dealer ? "DEALER" : "USER" }
                         </h2>
                         
-                        <InfoCircledIcon className='h-6 w-6'/>
+                        <InfoCircledIcon className='hidden md:inline h-6 w-6'/>
 
                     </div>
-                    <p className="text-xs opacity-50">No Records Found</p>
+                    <p className="text-xs opacity-50">Upgrade to feature cars</p>
                    
             </div>
 
             <div className="border-x border-red-50 opacity-10"></div>
 
             <div className="space-y-2 py-2 flex-grow">
-                    <p className="text-sm opacity-50">Ad Limit</p>
+                    <p className="text-xs md:text-sm opacity-50">Ad Limit</p>
                     <div className="flex justify-between items-center">
-                        <h2 className="Price text-xl md:text-2xl font-extrabold"> 
+                        <h2 className="Price text-lg md:text-2xl font-extrabold"> 
                         {session?.user?.adLimit}
                         </h2>
                         
-                        <InfoCircledIcon className='h-6 w-6'/>
+                        <InfoCircledIcon className='hidden md:inline h-6 w-6'/>
 
                     </div>
                     <p className="text-xs opacity-50">Post upto {session?.user?.adLimit} Cars</p>
@@ -82,13 +82,13 @@ const Account = async() => {
             <div className="border-x border-red-50 opacity-10"></div>
 
             <div className="space-y-2 py-2 flex-grow">
-                    <p className="text-sm opacity-50">Ghost Since</p>
+                    <p className="text-xs md:text-sm opacity-50">Ghost Since</p>
                     <div className="flex justify-between items-center">
-                        <h2 className="Price text-xl md:text-2xl font-extrabold"> 
+                        <h2 className="Price text-lg md:text-2xl font-extrabold"> 
                         {formatTimeDifference(session?.user?.date_joined as Date)}
                         </h2>
                         
-                        <InfoCircledIcon className='h-6 w-6'/>
+                        <InfoCircledIcon className='hidden md:inline h-6 w-6'/>
 
                     </div>
                     <p className="text-xs opacity-50">{"You're doing great"}</p>

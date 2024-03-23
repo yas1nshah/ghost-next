@@ -55,7 +55,7 @@ type CarResultProps = {
   async function getData(props: CarResultProps) {
 
         const { keyword, yearFrom, yearTo, priceFrom, priceTo, color, transmission, bodyType, adType, page, make, model } = props;
-
+      
         const cars = await getSearchCars(
             keyword,
             'All', // Location (not provided in props)
@@ -65,11 +65,12 @@ type CarResultProps = {
             yearTo ? yearTo.toString() : undefined,
             priceFrom? priceFrom.toString() : undefined,
             priceTo? priceTo.toString() : undefined,
-            
+            'All',
             transmission || 'All',
+            color || 'All',
             bodyType || 'All',
             adType || 'All',
-            page ? page.toString() :"1"
+            page ? parseInt(page)  : 1
         );
 
         return cars;

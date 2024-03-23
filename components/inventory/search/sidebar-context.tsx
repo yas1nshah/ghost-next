@@ -53,7 +53,7 @@ const SideBarContent = (params : SideBarContentProps)=> {
     const [adTypeS, setAdTypeS] = useState(adType)
     const [makeS, setMakeS] = useState(makeP)
     const [modelS, setModelS] = useState(modelP)
-
+   
     const handleSubmit = (e:any) => {
         e.preventDefault();
       
@@ -197,12 +197,21 @@ const SideBarContent = (params : SideBarContentProps)=> {
                             <AccordionContent>
                                 <Select  defaultValue={color} onValueChange={(e)=>setColorS(e)}>
                                     <SelectTrigger className="w-full">
-                                    <SelectValue placeholder="Theme" />
+                                    <SelectValue placeholder="Color" />
                                     </SelectTrigger>
-                                    <SelectContent >
-                                    <SelectItem value="Black">Black</SelectItem>
-                                    <SelectItem value="White">White</SelectItem>
-                                    <SelectItem value="Red">Red</SelectItem>
+                                    <SelectContent>
+                                        <SelectItem value="Black">Black</SelectItem>
+                                        <SelectItem value="White">White</SelectItem>
+                                        <SelectItem value="Red">Red</SelectItem>
+                                        <SelectItem value="Silver">Silver</SelectItem>
+                                        <SelectItem value="Blue">Blue</SelectItem>
+                                        <SelectItem value="Gray">Gray</SelectItem>
+                                        <SelectItem value="Green">Green</SelectItem>
+                                        <SelectItem value="Yellow">Yellow</SelectItem>
+                                        <SelectItem value="Orange">Orange</SelectItem>
+                                        <SelectItem value="Brown">Brown</SelectItem>
+                                        <SelectItem value="Beige">Beige</SelectItem>
+                                        <SelectItem value="Other">Other</SelectItem>
                                     </SelectContent>
                                 </Select>
                                 <Button className='mt-2' type='submit'>Go</Button>
@@ -216,11 +225,30 @@ const SideBarContent = (params : SideBarContentProps)=> {
                                     <SelectTrigger className="w-full">
                                     <SelectValue placeholder="Body Type" />
                                     </SelectTrigger>
-                                    <SelectContent >
-                                    <SelectItem value="Black">SUV</SelectItem>
-                                    <SelectItem value="White">White</SelectItem>
-                                    <SelectItem value="Red">Red</SelectItem>
+                                    <SelectContent>
+                                        <SelectItem value="Pick Up">Pick Up</SelectItem>
+                                        <SelectItem value="Hatchback">Hatchback</SelectItem>
+                                        <SelectItem value="Truck">Truck</SelectItem>
+                                        <SelectItem value="Sedan">Sedan</SelectItem>
+                                        <SelectItem value="SUV">SUV</SelectItem>
+                                        <SelectItem value="Coupe">Coupe</SelectItem>
+                                        <SelectItem value="Crossover">Crossover</SelectItem>
+                                       
+                                        <SelectItem value="Convertible">Convertible</SelectItem>
+                                        <SelectItem value="Micro Van">Micro Van</SelectItem>
+                                        <SelectItem value="MPV">MPV</SelectItem>
+                                        <SelectItem value="Mini Van">Mini Van</SelectItem>
+                                        <SelectItem value="Station Wagon">Station Wagon</SelectItem>
+                                        <SelectItem value="Van">Van</SelectItem>
+                                        <SelectItem value="Double Cabin">Double Cabin</SelectItem>
+                                        <SelectItem value="High Van">High Van</SelectItem>
+                                        <SelectItem value="High Roof">High Roof</SelectItem>
+                                        <SelectItem value="Off-Road Vehicles">Off-Road Vehicles</SelectItem>
+                                        <SelectItem value="Single Cabin">Single Cabin</SelectItem>
+                                        <SelectItem value="Mini Vehicles">Mini Vehicles</SelectItem>
+                                        <SelectItem value="Station Wagom">Station Wagom</SelectItem>
                                     </SelectContent>
+
                                 </Select>
                                 <Button className='mt-2' type='submit'>Go</Button>
                             </AccordionContent>

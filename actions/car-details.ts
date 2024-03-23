@@ -6,7 +6,13 @@ export async function getCarDetails(id: string) {
  try {
     const car = await db.car.findUniqueOrThrow({where: {id: id as string}});
     const seller = await db.user.findUnique({where: {id: car.sellerID}})
-    return {car, seller};
+    if(car.active){
+      return {car, seller};
+    }
+    else{
+
+      return { error: 'Car Not Found' };
+    }
           
 
     } catch (error) {

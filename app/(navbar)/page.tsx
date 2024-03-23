@@ -9,7 +9,7 @@ import { getHomeData } from '@/actions/home'
 import Hero from '@/components/home/hero'
 import Link from 'next/link'
 import { Car } from '@prisma/client';
-import { ArrowRightIcon } from '@radix-ui/react-icons'
+import { ArrowTopRightIcon } from '@radix-ui/react-icons'
 // import Combo from '@/components/home/combo';
 import Navbar from '@/components/home/navbar';
 import { ErrorBoundary } from 'next/dist/client/components/error-boundary'
@@ -64,11 +64,11 @@ const HomePage = async () => {
       {/* <Combo/> */}
         
       
-      {/* <CarCarosel
+      <CarCarosel
       title="Ghost Yard's"
-      see_more='inventory/search?adType=gp-car'
-      cars={recentCars as Car[]}
-      /> */}
+      see_more='inventory/search?adType=ghost-yard'
+      cars={gpCars as Car[]}
+      />
 
       {/* Services */}
       <div className="my-16">
@@ -88,32 +88,32 @@ const HomePage = async () => {
                 </div>
                 <Image className="w-3/5 h-auto mx-auto order-1 md:w-auto md:h-full md:order-2" width={200} height={200} src={`/media/services${item.image}`} alt={item.title}/>
                 <div className='absolute bottom-2 right-2'>
-                  <ArrowRightIcon className='w-4 h-4'/>
+                  <ArrowTopRightIcon className='w-4 h-4'/>
                 </div>
               </Link>
             ))
           }
         </div>
       </div>
-      <Suspense fallback={<><h1>hello</h1></>}>
+      {/* <Suspense fallback={<><h1>hello</h1></>}>
         <CarCarosel
         title='Recent Cars'
         see_more='inventory/search?adType=gp-car'
         cars={recentCars as Car[]}
         />
-      </Suspense>
-      {/* <Suspense>
+      </Suspense> */}
+      <Suspense>
         <CarCarosel
         title='Featured Cars'
-        see_more='inventory/search?adType=gp-car'
-        cars={recentCars as Car[]}
+        see_more='inventory/search?adType=featured'
+        cars={featuredCars as Car[]}
         />
       </Suspense>
       <CarCarosel
       title='Recent Cars'
-      see_more='inventory/search?adType=gp-car'
+      see_more='inventory/search?adType=free-listing'
       cars={recentCars as Car[]}
-      /> */}
+      />
       {/* {JSON.stringify(recentCars)} */}
 
   {/* <Navbar/> */}
