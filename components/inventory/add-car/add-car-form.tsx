@@ -1,7 +1,6 @@
 "use client"
 
-import { search } from '@/actions/fetch-models'
-import Link from 'next/link'
+
 import React, { useEffect, useState, useTransition } from 'react'
 import * as z from "zod"
 import { Input } from '@/components/ui/input'
@@ -23,10 +22,14 @@ import { CarFinal, CarSchema } from '@/schemas'
 import FormError from '@/components/form-error'
 import FormSuccess from '@/components/form-success'
 import { Readable } from 'stream';
-import { AddCarSchema, CarResult, City } from '@/types'
+
 import SelectModel from './model'
 import SelectCity from './city'
 import SelectRegistration from './registration'
+
+
+
+
 
 
 
@@ -70,157 +73,6 @@ const AddCarForm = () => {
     sellerComments: "",
 })
 
-  // ? Models
-  const [showModels, setShowModels] = useState(false)
-  const [modelData, setModelData] = useState<CarResult[]>([ 
-    {
-      "id": 352,
-      "make": "Honda",
-      "model": "Civic Reborn VTi Oriel 1.8 i-VTEC",
-      "title": "Honda Civic Reborn VTi Oriel 1.8 i-VTEC",
-      "engineType": "Petrol",
-      "engineCapacity": "1800 cc",
-      "bodyType": "Sedan"
-    },
-    {
-    "id": 332,
-    "make": "Honda",
-    "model": "Civic",
-    "title": "Honda Civic",
-    "engineType": "Petrol",
-    "engineCapacity": "1500 cc",
-    "bodyType": "Sedan"
-  },
-  {
-    "id": 1322,
-    "make": "Toyota",
-    "model": "Corolla",
-    "title": "Toyota Corolla",
-    "engineType": "Petrol",
-    "engineCapacity": "1600 cc",
-    "bodyType": "Sedan"
-  },
-  {
-    "id": 1375,
-    "make": "Toyota",
-    "model": "Corolla GLi 1.3",
-    "title": "Toyota Corolla GLi 1.3",
-    "engineType": "Petrol",
-    "engineCapacity": "1300 cc",
-    "bodyType": "Sedan"
-  },
-  {
-    "id": 1054,
-    "make": "Suzuki",
-    "model": "Alto",
-    "title": "Suzuki Alto",
-    "engineType": "Petrol",
-    "engineCapacity": "660 cc",
-    "bodyType": "Hatchback"
-  },
-  {
-    "id": 1752,
-    "make": "Toyota",
-    "model": "Yaris",
-    "title": "Toyota Yaris",
-    "engineType": "Petrol",
-    "engineCapacity": "1000 cc",
-    "bodyType": "Sedan"
-  },
-   ])
-
-  const getModels = async (value:string) => {
-    
-    let searchResult: CarResult[];
-
-        // Check local storage for models
-        const cachedModels = localStorage.getItem('models');
-        if (cachedModels) {
-            const parsedModels: CarResult[] = JSON.parse(cachedModels);
-            searchResult = parsedModels.filter(model =>
-                model.make.toLowerCase().includes(value.toLowerCase())
-            );
-            setModelData(searchResult);
-        } else {
-            // If models not found in local storage, fetch from server
-            searchResult = await search(value);
-            setModelData(searchResult);
-        }
-  }
-
-  // ? Registration
-  const [showReg, setShowReg] = useState(false)
-  const [regData, setRegData] = useState([{"id": 103, "name": "Lahore"}, {"id": 162, "name": "Rawalpindi"}, {"id": 85, "name": "Karachi"}, {"id": 130, "name": "Multan"}, {"id": 71, "name": "Islamabad"}, {"id": 50, "name": "Faisalabad"}, {"id": 1111, "name": "Punjab"},{"id": 1112, "name": "Sindh"},{"id": 1113, "name": "KPK"},])
-  
-  const getRegistrations = async (keyword: string) => {
-      try {
-        let searchResult;
-    
-        // Check local storage for cities
-        const cachedCities = localStorage.getItem('cities');
-        if (cachedCities) {
-          const parsedCities = JSON.parse(cachedCities);
-          // Filter cities based on the keyword
-          searchResult = parsedCities.filter((city: City) =>
-            city.name.toLowerCase().includes(keyword.toLowerCase())
-          );
-          setRegData(searchResult);
-        } else {
-          // If cities not found in local storage, fetch from server
-          const response = await fetch('/cities.json'); // Adjust the path as needed
-          const citiesData = await response.json();
-          // Store cities in local storage
-          localStorage.setItem('cities', JSON.stringify(citiesData));
-          // Filter cities based on the keyword
-          searchResult = citiesData.filter((city : City)=>
-            city.name.toLowerCase().includes(keyword.toLowerCase())
-          );
-          setRegData(searchResult);
-        }
-    
-        
-      } catch (error) {
-        console.error('Error fetching cities:', error);
-        setCityData([]);
-      }
-  }
-
-  // ? Location
-  const [showCity, setShowCity] = useState(false)
-  const [cityData, setCityData] = useState([{"id": 103, "name": "Lahore"}, {"id": 162, "name": "Rawalpindi"}, {"id": 85, "name": "Karachi"}, {"id": 130, "name": "Multan"}, {"id": 71, "name": "Islamabad"}, {"id": 50, "name": "Faisalabad"},])
-  
-  const getCities = async (keyword: string) => {
-      try {
-        let searchResult;
-    
-        // Check local storage for cities
-        const cachedCities = localStorage.getItem('cities');
-        if (cachedCities) {
-          const parsedCities = JSON.parse(cachedCities);
-          // Filter cities based on the keyword
-          searchResult = parsedCities.filter((city: City) =>
-            city.name.toLowerCase().includes(keyword.toLowerCase())
-          );
-          setCityData(searchResult);
-        } else {
-          // If cities not found in local storage, fetch from server
-          const response = await fetch('/cities.json'); // Adjust the path as needed
-          const citiesData = await response.json();
-          // Store cities in local storage
-          localStorage.setItem('cities', JSON.stringify(citiesData));
-          // Filter cities based on the keyword
-          searchResult = citiesData.filter((city : City)=>
-            city.name.toLowerCase().includes(keyword.toLowerCase())
-          );
-          setCityData(searchResult);
-        }
-    
-        
-      } catch (error) {
-        console.error('Error fetching cities:', error);
-        setCityData([]);
-      }
-  }
 
   // ? Gallery
   const handleFileChange = async (e : React.ChangeEvent<HTMLInputElement>) => {
@@ -312,30 +164,6 @@ const AddCarForm = () => {
   }
 
 
-  const uploadImages = async (id:string) => {
-    // if(newCar.id === "")
-    // {
-    //   setError("ID not defined")
-    //   return;
-    // }
-  
-    for (let index = 0; index < gallery.length; index++) {
-      const image = gallery[index];
-      const makeModelYear = `${newCar.make}-${newCar.model}-${newCar.year}`; // Assuming make and model are available
-      const imageName = `${makeModelYear}-${id}-${index}.webp`;
-      const data = new FormData();
-      data.append('img', new File([image], imageName, { type: image.type }));
-      saveDocumentInteraction(data)
-      .then((data)=>{
-        setError(data.error as string + index);
-        setSuccess(data.success as string + index);
-      });
-      
-      router.replace("/")
-    
-    }
-      
-  };
 
   async function saveImages(gallery:any, newCar:any, id:any) {
     for (let index = 0; index < gallery.length; index++) {
@@ -387,10 +215,10 @@ const AddCarForm = () => {
 
 
   return (
-    <div className='space-y-6'>
-        {/* Select Gallery */}
-        {newCar.galleryIndex}
+    <div className='space-y-6 my-6'>
+       
         <div className="relative">
+          <span className='label-text-alt'>Gallery</span>
           {
             gallery.length > 0 && (
             
@@ -412,9 +240,7 @@ const AddCarForm = () => {
           )}
           <Input className='text-lg' type='file' multiple={true} onChange={handleFileChange}/>
         </div>
-        {
-          JSON.stringify(newCar.gallery)
-        }
+        
         <form className='space-y-6' onSubmit={onSubmit}>
         {/* Select Location */}
         <div className='relative'>

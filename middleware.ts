@@ -6,7 +6,7 @@ import {
   DEFAULT_LOGIN_REDIRECT,
   apiAuthPrefix,
   authRoutes,
-  privateRoutes
+  loggedOutRoutes
 } from "@/routes"
 
  
@@ -15,12 +15,33 @@ export async function middleware(req: NextRequest) {
   const session = await auth();
   const  {nextUrl} = req;
 
+  if(nextUrl.pathname.startsWith("/admin"))
+  {
+    if (!session?.user)
+    {
+          return Response.redirect(new URL( "/account/login", nextUrl))
+    }
+
+    else if(session?.user?.role !== "ADMIN" && session?.user?.role !== "TEAM")
+    {
+      return Response.redirect(new URL( "/", nextUrl))
+    }
+  }
+
+  
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix)
-  const isPrivateRoute = privateRoutes.includes(nextUrl.pathname)
-  const isAuthRoute = authRoutes.includes(nextUrl.pathname)
+  const isPrivateRoute = authRoutes.includes(nextUrl.pathname)
+  const isLoggedOutRoute = loggedOutRoutes.includes(nextUrl.pathname)
   console.log(req.url)
   console.log(nextUrl.pathname)
 
+  if(isLoggedOutRoute)
+    {
+      if (session?.user)
+        {
+          return Response.redirect(new URL( "/account", nextUrl))
+        }
+    }
   if(isPrivateRoute)
     {
       if (!session?.user)
@@ -28,14 +49,6 @@ export async function middleware(req: NextRequest) {
           return Response.redirect(new URL( "/account/login", nextUrl))
         }
     }
-
-  // if(isAuthRoute)
-  // {
-  //   if (session?.user)
-  //   {
-  //     return Response.redirect(new URL( DEFAULT_LOGIN_REDIRECT, nextUrl))
-  //   }
-  // }
 
 }
 

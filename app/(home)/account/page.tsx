@@ -1,26 +1,26 @@
 
-import React, { useEffect } from 'react'
+import React from 'react'
 import Link from 'next/link'
 import { auth } from '@/auth'
-import { signOut } from '@/auth'
+
 import {
     Avatar,
     AvatarFallback,
     AvatarImage,
   } from "@/components/ui/avatar"
+  import { Button } from '@/components/ui/button'
 import { InfoCircledIcon } from '@radix-ui/react-icons'
-import { Button } from '@/components/ui/button'
-import formatTimeDifference from '@/lib/format-date'
-import Image from 'next/image'
 import Logout from '@/components/common/logout'
 import { ArrowTopRightIcon, HeartIcon, SectionIcon, MagicWandIcon, CookieIcon, GlobeIcon, InstagramLogoIcon, FigmaLogoIcon, FramerLogoIcon, CrumpledPaperIcon  } from '@radix-ui/react-icons'
 import { ModeToggle } from '@/components/theme-switcher'
 import ResetCache from '@/components/account/reset-cache'
 
+import formatTimeDifference from '@/lib/format-date'
+
+
 
 const Account = async() => {
     const session = await auth();
-
 
   return (
     <div className='space-y-4'>
@@ -40,11 +40,11 @@ const Account = async() => {
             <div>
                 <h3 className='text-sm md:text-lg'>Welcome Back!! 👋</h3>
                 <h2 className='text-xl md:text-3xl font-semibold'>{session?.user?.name}</h2>
-                <Button className='my-2' variant={'outline'} size={'xs'}>Log out</Button>
+                <Button className='my-2' variant={'outline'} size={'xs'} disabled={true}>Edit Profile</Button>
             </div>
             <Avatar className='w-24 h-24 mx-4'>
                 <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-                <AvatarFallback>CN</AvatarFallback>
+                <AvatarFallback>GP</AvatarFallback>
             </Avatar>
         </div>
 
@@ -178,12 +178,13 @@ const Account = async() => {
         </div>
 
         <div className="my-6 bg-card px-4 py-2 rounded-xl">
-          <Link href={'https://www.tiktok.com/@ghostprotocolspk'}  className="flex justify-between items-center gap-4">
+          <Link href={'https://tixy.pk'}  className="flex justify-between items-center gap-4">
             <CrumpledPaperIcon/>
             <p className='flex-grow'>Developed by <span className='font-semibold text-primary'>Tixy.pk</span></p>
             <ArrowTopRightIcon/>
           </Link>
         </div>
+
         <Logout/>
       
 

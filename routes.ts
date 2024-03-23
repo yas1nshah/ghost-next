@@ -4,9 +4,10 @@
  * @type {string[]}
  */
 
-export const privateRoutes = [
+export const loggedOutRoutes = [
     "/settings",
-    "/account"
+    "/account/login",
+    "/account/register"
 ]
 
 /**

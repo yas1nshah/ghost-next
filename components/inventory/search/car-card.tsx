@@ -14,7 +14,7 @@ const CarCard = (params : any) => {
 
     return (
        
-        <Link key={car.id} href={`/inventory/${link}/${car.id}`}  className={`bg-card ${car.featuredCar && "border-2 border-secondary"}  h-28 mx-0 md:h-40 md:px-2 w-full flex rounded-xl dark:text-white text-nowrap `}>
+        <Link key={car.id} href={`/inventory/${link}/${car.id}`}  className={`bg-card ${car.featured && "border border-primary"}  h-28 mx-0 md:h-40 md:px-2 w-full flex rounded-xl dark:text-white text-nowrap `}>
           
         <div className='w-2/6 p-2 md:w-1/4 md:px-2 md:py-3 h-full flex-shrink-0 flex-grow-0'>
           <Image draggable="false" className="w-full h-full object-cover  rounded-xl" src={`/media/inventory/${newImg}.webp`} width={250} height={150} alt={car.title}/>
@@ -48,15 +48,15 @@ const CarCard = (params : any) => {
                         {formatAmount( car.price)} 
                     </h2>
                     {
-                      car.featuredCar &&
-                      <div className="hidden md:block text-xs px-1 md:py-0.5 bg-secondary my-1 rounded-full text-center ">GP Featured</div>
+                      car.featured &&
+                      <div className="hidden md:block text-xs px-1 md:py-0.5 bg-primary my-1 rounded-full text-center ">GP Featured</div>
                     }
                     {
-                      car.gpCar &&
-                      <div className="hidden md:block text-xs px-1 md:py-0.5 bg-secondary my-1 rounded-full text-center ">GP Personal</div>
+                      car.gpcar &&
+                      <div className="hidden md:block text-xs px-1 md:py-0.5 bg-primary my-1 rounded-full text-center ">GP Personal</div>
                     }
                     {
-                      !car.gpCar && !car.featuredCar &&
+                      !car.gpcar && !car.featured &&
                       <div className="hidden md:block text-xs px-1 md:py-0.5 bg-primary my-1 rounded-full text-center ">Free Listing</div>
                     }
                 </div>

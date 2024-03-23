@@ -19,10 +19,13 @@ export async function generateMetadata(
      title = `${make} ${model} for Sale in Pakistan`
      desc = `Find the best ${make} ${model} for Sale in Pakistan. Ghost Protocols offers best car Listings for ${make} ${model}. Post your Car for FREE at Ghostprotocols Now.`
   }
-  else{
+  else if(keyword){
      title = `${keyword} for Sale in Pakistan`
      desc = `Find the best ${keyword}for Sale in Pakistan. Ghost Protocols offers best car Listings for ${keyword}. Post your Car for FREE at Ghostprotocols Now.`
-
+    }
+    else{
+      title= "Search Best Cars for Sale in Pakistan"
+      desc = `Find the best Car for Sale in Pakistan. Ghost Protocols offers best car Listings for All Cars. Post your Car for FREE at Ghostprotocols Now.`
   }
  
   return {

@@ -112,10 +112,9 @@ export const updateCar = async (values : z.infer<typeof CarSchema>) => {
  
     if(!validatedFields.success) return {error: "Invalid Data"}
  
-    const carCount = await getCarsCountByUserId(session.user.id as string)
-    if(session?.user.adLimit  <= carCount) return {error: "Your adLimit is reached!"}
+    // const carCount = await getCarsCountByUserId(session.user.id as string)
+    // if(session?.user.id  !== validatedFields.data.id) return Response.redirect("/")
 
-    console.log(values.gallery)
     try {
         const car = await db.car.update({
             where:{id: validatedFields.data.id as string},

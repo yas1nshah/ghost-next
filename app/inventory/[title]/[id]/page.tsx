@@ -25,8 +25,6 @@ export async function generateMetadata(
     const {title, id} = params;
     let title2 = `${title.replace(/-/g, " ")} for Sale in Pakistan`
     let desc = `Buy ${title2} in best price only at Ghost Protocols. Find your Next Car or Post Your Car for FREE.`
-    
-    
    
     return {
       title: title2,
@@ -216,12 +214,16 @@ const CarDetailsPage = async ({ params }: { params: { title: string , id : strin
                         <hr className='my-4 border-popover-foreground opacity-15'/>   
                         
                         <div className="space-y-2 py-2">
-                            <Button className='w-full' variant={'outline'}>
-                            Seller Phone
-                            </Button>
-                            <Button className='w-full'>
-                                Buy it For Me
-                            </Button>
+                            <Link target='_blank' href={`https://wa.me/92${seller?.phone}?text=Hello%2C%20I%20am%20interedted%20in%20your%20Ad%20for%20${car.title}.%20https://ghostprotocols.pk/inventory/-/${car.id}`}>
+                                <Button className='w-full' variant={'outline'}>
+                                Seller Phone
+                                </Button>
+                            </Link>
+                            <Link target='_blank' href={`https://wa.me/16232741046?text=p/BTFM%20${car.title}.%20https://ghostprotocols.pk/inventory/-/${car.id}`}>
+                                <Button className='w-full'>
+                                    Buy it For Me
+                                </Button>
+                            </Link>
                         </div>
                     </div>
         
@@ -260,9 +262,11 @@ const CarDetailsPage = async ({ params }: { params: { title: string , id : strin
                         Post Your Car for <span className='text-primary'>FREE</span>
                     </h4>
                     <p className='text-sm'>Reach the Ghost Community</p>
-                    <Button className='my-4' variant={'outline'}>
-                        Add Car <ArrowTopRightIcon/>
-                    </Button>
+                    <Link href={'/inventory/add-car'}>
+                        <Button className='my-4' variant={'outline'}>
+                            Add Car <ArrowTopRightIcon/>
+                        </Button>
+                    </Link>
                 </div>
                 <Image src={'/media/services/sell-now.webp'} width={200} height={200} alt='Sell Now'/>
             </div>
@@ -273,7 +277,7 @@ const CarDetailsPage = async ({ params }: { params: { title: string , id : strin
     return (
     <div className='w-full h-lvh flex justify-center items-center'>
         <h2 className='text-lg'>
-            No Cars Found
+            Car Not Found 🤚⛔
         </h2>
     </div>
 

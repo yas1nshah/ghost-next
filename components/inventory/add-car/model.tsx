@@ -1,11 +1,11 @@
 
-import { CarFinal, CarSchema } from '@/schemas'
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import { CarFinal } from '@/schemas'
+import React, {useEffect, useState } from 'react'
 import { Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut } from '@/components/ui/command'
 import { ArrowTopRightIcon } from '@radix-ui/react-icons'
 
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+
 import { CarResult } from '@/types'
 import { Button } from '@/components/ui/button'
 
@@ -27,7 +27,62 @@ const SelectModel = (props : any) => {
       }, [])
 
     const [keyword, setKeyword] = useState("")
-    const [result, setResult] = useState<CarResult[]>([{ id: 0, make: "", model: "Honda", title: "", engineType: "", engineCapacity: "", bodyType: "" }]);
+    const [result, setResult] = useState<CarResult[]>([
+      {
+        "id": 352,
+        "make": "Honda",
+        "model": "Civic Reborn VTi Oriel 1.8 i-VTEC",
+        "title": "Honda Civic Reborn VTi Oriel 1.8 i-VTEC",
+        "engineType": "Petrol",
+        "engineCapacity": "1800 cc",
+        "bodyType": "Sedan"
+      },
+      {
+      "id": 332,
+      "make": "Honda",
+      "model": "Civic",
+      "title": "Honda Civic",
+      "engineType": "Petrol",
+      "engineCapacity": "1500 cc",
+      "bodyType": "Sedan"
+    },
+    {
+      "id": 1322,
+      "make": "Toyota",
+      "model": "Corolla",
+      "title": "Toyota Corolla",
+      "engineType": "Petrol",
+      "engineCapacity": "1600 cc",
+      "bodyType": "Sedan"
+    },
+    {
+      "id": 1375,
+      "make": "Toyota",
+      "model": "Corolla GLi 1.3",
+      "title": "Toyota Corolla GLi 1.3",
+      "engineType": "Petrol",
+      "engineCapacity": "1300 cc",
+      "bodyType": "Sedan"
+    },
+    {
+      "id": 1054,
+      "make": "Suzuki",
+      "model": "Alto",
+      "title": "Suzuki Alto",
+      "engineType": "Petrol",
+      "engineCapacity": "660 cc",
+      "bodyType": "Hatchback"
+    },
+    {
+      "id": 1752,
+      "make": "Toyota",
+      "model": "Yaris",
+      "title": "Toyota Yaris",
+      "engineType": "Petrol",
+      "engineCapacity": "1000 cc",
+      "bodyType": "Sedan"
+    },
+    ]);
   
       
     const handleInputChange = (e:string)=>{
@@ -94,7 +149,7 @@ const SelectModel = (props : any) => {
           <CommandInput value={keyword} onValueChange={(e) => handleInputChange(e)} placeholder="Type make or model..." />
           <CommandList>
             <CommandEmpty>
-                Cant find your Car? <Link className='text-primary font-semibold' href={'/inventory/add-car/report'}>Report</Link>
+                Cant find your Car? <Link className='text-primary font-semibold' href={'/inventory/add-car/report-car'}>Report</Link>
             </CommandEmpty>
             {result.length > 0 &&
             <CommandGroup heading="Suggestions">

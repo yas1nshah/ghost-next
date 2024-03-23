@@ -1,9 +1,7 @@
 "use client"
 
 import { search } from '@/actions/fetch-models'
-import Link from 'next/link'
 import React, { useEffect, useState, useTransition } from 'react'
-import * as z from "zod"
 import { Input } from '@/components/ui/input'
 import {
   Select,
@@ -22,9 +20,9 @@ import { Button } from '@/components/ui/button'
 import FormError from '@/components/form-error'
 import FormSuccess from '@/components/form-success'
 import { Readable } from 'stream';
-import { Car } from '@prisma/client'
-import { AddCarSchema, CarResult, City } from '@/types'
-import { CarFinal, CarSchema } from '@/schemas'
+
+import { CarResult, City } from '@/types'
+import { CarFinal } from '@/schemas'
 import SelectModel from './model'
 import SelectCity from './city'
 import SelectRegistration from './registration'
@@ -70,157 +68,7 @@ const EditCarForm = ({result}: any) => {
     sellerComments: car.sellerComments || '',
 });
 
-  // ? Models
-  const [showModels, setShowModels] = useState(false)
-  const [modelData, setModelData] = useState<CarResult[]>([ 
-    {
-      "id": 352,
-      "make": "Honda",
-      "model": "Civic Reborn VTi Oriel 1.8 i-VTEC",
-      "title": "Honda Civic Reborn VTi Oriel 1.8 i-VTEC",
-      "engineType": "Petrol",
-      "engineCapacity": "1800 cc",
-      "bodyType": "Sedan"
-    },
-    {
-    "id": 332,
-    "make": "Honda",
-    "model": "Civic",
-    "title": "Honda Civic",
-    "engineType": "Petrol",
-    "engineCapacity": "1500 cc",
-    "bodyType": "Sedan"
-  },
-  {
-    "id": 1322,
-    "make": "Toyota",
-    "model": "Corolla",
-    "title": "Toyota Corolla",
-    "engineType": "Petrol",
-    "engineCapacity": "1600 cc",
-    "bodyType": "Sedan"
-  },
-  {
-    "id": 1375,
-    "make": "Toyota",
-    "model": "Corolla GLi 1.3",
-    "title": "Toyota Corolla GLi 1.3",
-    "engineType": "Petrol",
-    "engineCapacity": "1300 cc",
-    "bodyType": "Sedan"
-  },
-  {
-    "id": 1054,
-    "make": "Suzuki",
-    "model": "Alto",
-    "title": "Suzuki Alto",
-    "engineType": "Petrol",
-    "engineCapacity": "660 cc",
-    "bodyType": "Hatchback"
-  },
-  {
-    "id": 1752,
-    "make": "Toyota",
-    "model": "Yaris",
-    "title": "Toyota Yaris",
-    "engineType": "Petrol",
-    "engineCapacity": "1000 cc",
-    "bodyType": "Sedan"
-  },
-   ])
-
-  const getModels = async (value:string) => {
-    
-    let searchResult: CarResult[];
-
-        // Check local storage for models
-        const cachedModels = localStorage.getItem('models');
-        if (cachedModels) {
-            const parsedModels: CarResult[] = JSON.parse(cachedModels);
-            searchResult = parsedModels.filter(model =>
-                model.make.toLowerCase().includes(value.toLowerCase())
-            );
-            setModelData(searchResult);
-        } else {
-            // If models not found in local storage, fetch from server
-            searchResult = await search(value);
-            setModelData(searchResult);
-        }
-  }
-
-  // ? Registration
-  const [showReg, setShowReg] = useState(false)
-  const [regData, setRegData] = useState([{"id": 103, "name": "Lahore"}, {"id": 162, "name": "Rawalpindi"}, {"id": 85, "name": "Karachi"}, {"id": 130, "name": "Multan"}, {"id": 71, "name": "Islamabad"}, {"id": 50, "name": "Faisalabad"}, {"id": 1111, "name": "Punjab"},{"id": 1112, "name": "Sindh"},{"id": 1113, "name": "KPK"},])
   
-  const getRegistrations = async (keyword: string) => {
-      try {
-        let searchResult;
-    
-        // Check local storage for cities
-        const cachedCities = localStorage.getItem('cities');
-        if (cachedCities) {
-          const parsedCities = JSON.parse(cachedCities);
-          // Filter cities based on the keyword
-          searchResult = parsedCities.filter((city: City) =>
-            city.name.toLowerCase().includes(keyword.toLowerCase())
-          );
-          setRegData(searchResult);
-        } else {
-          // If cities not found in local storage, fetch from server
-          const response = await fetch('/cities.json'); // Adjust the path as needed
-          const citiesData = await response.json();
-          // Store cities in local storage
-          localStorage.setItem('cities', JSON.stringify(citiesData));
-          // Filter cities based on the keyword
-          searchResult = citiesData.filter((city : City)=>
-            city.name.toLowerCase().includes(keyword.toLowerCase())
-          );
-          setRegData(searchResult);
-        }
-    
-        
-      } catch (error) {
-        console.error('Error fetching cities:', error);
-        setCityData([]);
-      }
-  }
-
-  // ? Location
-  const [showCity, setShowCity] = useState(false)
-  const [cityData, setCityData] = useState([{"id": 103, "name": "Lahore"}, {"id": 162, "name": "Rawalpindi"}, {"id": 85, "name": "Karachi"}, {"id": 130, "name": "Multan"}, {"id": 71, "name": "Islamabad"}, {"id": 50, "name": "Faisalabad"},])
-  
-  const getCities = async (keyword: string) => {
-      try {
-        let searchResult;
-    
-        // Check local storage for cities
-        const cachedCities = localStorage.getItem('cities');
-        if (cachedCities) {
-          const parsedCities = JSON.parse(cachedCities);
-          // Filter cities based on the keyword
-          searchResult = parsedCities.filter((city: City) =>
-            city.name.toLowerCase().includes(keyword.toLowerCase())
-          );
-          setCityData(searchResult);
-        } else {
-          // If cities not found in local storage, fetch from server
-          const response = await fetch('/cities.json'); // Adjust the path as needed
-          const citiesData = await response.json();
-          // Store cities in local storage
-          localStorage.setItem('cities', JSON.stringify(citiesData));
-          // Filter cities based on the keyword
-          searchResult = citiesData.filter((city : City)=>
-            city.name.toLowerCase().includes(keyword.toLowerCase())
-          );
-          setCityData(searchResult);
-        }
-    
-        
-      } catch (error) {
-        console.error('Error fetching cities:', error);
-        setCityData([]);
-      }
-  }
 
   // ? Gallery
   const handleFileChange = async (e : React.ChangeEvent<HTMLInputElement>) => {
@@ -378,9 +226,11 @@ const EditCarForm = ({result}: any) => {
     startTransition(async () => {
       updateCar(newCar)
             .then(async (data) => {
-          
-              setError(data.error);
-              setSuccess(data.success);
+            
+               
+                setError(data.error);
+                setSuccess(data.success);
+              
               // setNewCar({...newCar, id: newCar.id})
               // if(data.newId)
               if(galleryChange)
@@ -389,6 +239,7 @@ const EditCarForm = ({result}: any) => {
               }
             }).then(()=>router.replace("/account")) 
     });
+    
 
     
     
@@ -396,11 +247,12 @@ const EditCarForm = ({result}: any) => {
 
 
   return (
-    <div className='space-y-6'>
-      {JSON.stringify(result.car.gallery)}
+    <div className='space-y-6 my-6'>
+      
         {/* Select Gallery */}
-        {newCar.galleryIndex}
+       
         <div className="relative">
+        <span className='label-text-alt'>Gallery</span>
           {!galleryChange &&
             result.car.gallery.length >= 0 && (
             
@@ -457,108 +309,14 @@ const EditCarForm = ({result}: any) => {
           <span className='label-text-alt'>Location</span>
           <SelectCity newCar={newCar} setNewCar={setNewCar}/>
 
-          {/* <Input
-            type='text'
-            placeholder='Choose Your Location'
-            className=''
-            onChange={(e) => {
-              if(newCar)
-              newCar.location  = e.target.value ;
-              // setTitle(e.target.value);
-              getCities(e.target.value);
-            }}
-            onFocus={() => setShowCity(true)}
-            onBlur={() => setShowCity(false)}
-            value={newCar?.location}
-          />
-
-          {
-            showCity &&
-            <div  className="p-4 my-2 absolute top-full left-0 z-20 bg-white dark:bg-black drop-shadow-xl w-full overflow-hidden overflow-y-scroll h-full md:h-64 rounded-xl">
-              {
-                cityData.length > 0 ?
-                  cityData.map((city, index) => (
-                    <div key={index} className='p-2'
-                      onMouseDown={() => {
-                        if(newCar)
-                        {
-                          newCar.location = city.name;
-                        }
-                        setShowCity(false);
-                      }}
-                    >
-                   
-                      <h4 className="text-base md:text-lg font-semibold">
-                        {city.name}
-                      </h4>
-                      <hr className='dark:opacity-35 opacity-100' />
-                    </div>
-                  )) :
-                  <p className="text-center">No Cars Found <span className='text-secondary'><Link href={'/'}>Report</Link></span></p>
-              }
-            </div>
-          } */}
+          
         </div>
 
         {/* Select Model */}
         <div className='relative'>
           <span className='label-text-alt'>Model</span>
           <SelectModel newCar={newCar} setNewCar={setNewCar}/>
-          {/* <Input
-            type='text'
-            placeholder='Choose Your Model'
-            className=''
-            onChange={(e) => {
-              setNewCar({...newCar, title:e.target.value })
-              // setTitle(e.target.value);
-              getModels(e.target.value);
-            }}
-            onFocus={() => setShowModels(true)}
-            onBlur={() => setShowModels(false)}
-            value={newCar!.title as string}
-          />
-
-          {
-            showModels &&
-            <div  className="p-4 my-2 absolute top-full left-0 z-20 bg-white dark:bg-black drop-shadow-xl w-full overflow-hidden overflow-y-scroll h-full md:h-64 rounded-xl">
-              {
-                modelData.length > 0 ?
-                  modelData.map((model, index) => (
-                    <div key={index} className='p-2'
-                      onMouseDown={() => {
-                        setNewCar({...newCar,
-                          make : model.make,
-                          model : model.model,
-                          engine : model.engineType,
-                          engineCapacity : model.engineCapacity,
-                          body : model.bodyType,
-                          title : model.title })
-                        
-                        console.log("hello")
-                        console.log(newCar)
-                        // setMake(model.make);
-                        // setModel(model.model);
-                        // setEngine(model.engineType);
-                        // setEngineCapacity(model.engineCapacity);
-                        // setBody(model.bodyType);
-                        // setTitle(model.title); // Update title here
-                        // setCheck(prevCheck => ({ ...prevCheck, model: true }));
-                        setShowModels(false);
-                      }}
-                    >
-                      <h5 className="text-xs md:text-sm">
-                        {model.make}
-                      </h5>
-                      <h4 className="text-base md:text-lg font-semibold">
-                        {model.model}
-                      </h4>
-                      <hr className='dark:opacity-35 opacity-100' />
-                    </div>
-                  )) :
-                  <p className="text-center">No Cars Found <span className='text-secondary'><Link href={'/'}>Report</Link></span></p>
-              }
-            </div>
-          } */}
+          
         </div>
 
         {/* Year and Price */}
@@ -601,45 +359,7 @@ const EditCarForm = ({result}: any) => {
         <div className='relative'>
           <span className='label-text-alt'>Registration</span>
           <SelectRegistration newCar={newCar} setNewCar={setNewCar}/>
-{/* 
-          <Input
-            type='text'
-            placeholder='Choose Your Registration'
-            className=''
-            onChange={(e) => {
-              setNewCar({...newCar, registration:e.target.value})
-              
-              // setTitle(e.target.value);
-              getRegistrations(e.target.value);
-            }}
-            onFocus={() => setShowReg(true)}
-            onBlur={() => setShowReg(false)}
-            value={newCar.registration}
-          />
 
-          {
-            showReg &&
-            <div  className="p-4 my-2 absolute top-full left-0 z-20 bg-white dark:bg-black drop-shadow-xl w-full overflow-hidden overflow-y-scroll h-full md:h-64 rounded-xl">
-              {
-                regData.length > 0 ?
-                  regData.map((city, index) => (
-                    <div key={index} className='p-2'
-                      onMouseDown={() => {
-                        setNewCar({...newCar, registration: city.name})
-                        setShowReg(false);
-                      }}
-                    >
-                   
-                      <h4 className="text-base md:text-lg font-semibold">
-                        {city.name}
-                      </h4>
-                      <hr className='dark:opacity-35 opacity-100' />
-                    </div>
-                  )) :
-                  <p className="text-center">No Cars Found <span className='text-secondary'><Link href={'/'}>Report</Link></span></p>
-              }
-            </div>
-          } */}
         </div>
 
         {/* Color and Mileage */}
@@ -707,13 +427,3 @@ const EditCarForm = ({result}: any) => {
 }
 
 export default EditCarForm
-
-// import React from 'react'
-
-// const EditCarForm = () => {
-//   return (
-//     <div>EditCarForm</div>
-//   )
-// }
-
-// export default EditCarForm

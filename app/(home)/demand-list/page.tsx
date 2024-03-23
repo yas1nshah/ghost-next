@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import * as z from "zod"
-import { zodResolver } from '@hookform/resolvers/zod'
+
 import { DemandListSchema } from "@/schemas"
 import formatTimeDifference from '@/lib/format-date'
 import { auth } from '@/auth'
@@ -26,16 +26,7 @@ export const metadata = {
 };
 
 
-async function getData(page : number) {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
-  const res = await fetch(`${baseUrl}/api/demand-list?page=${page}`,{cache: 'no-cache'})
- 
-  if (!res.ok) {
-    throw new Error('Failed to fetch data')
-  }
-  
-  return res.json()
-}
+
 
 
 const DemandListPage = async ({params, searchParams}:any) => {

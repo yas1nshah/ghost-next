@@ -1,5 +1,4 @@
-import Header from "@/components/header/header"
-import Navbar from "@/components/home/navbar"
+import BottomNavbar from "@/components/home/bottom-navbar"
 
 export default function InventoryLayout({
     children, // will be a page or nested layout
@@ -7,11 +6,11 @@ export default function InventoryLayout({
     children: React.ReactNode
   }) {
     return (
-      <section>
+      <>
         {/* Include shared UI here e.g. a header or sidebar */}
-        <Navbar/>
+        <BottomNavbar/>
    
         {children}
-      </section>
+      </>
     )
   }

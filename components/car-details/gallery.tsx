@@ -26,17 +26,7 @@ const Gallery = (props : any) => {
     const [active, setActive] = useState(false)
     const {gallery, id} = props;
 
-    useEffect(() => {
-      const down = (e: KeyboardEvent) => {
-        if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
-          e.preventDefault()
-          setActive((prev) => !prev)
-        }
-      }
-  
-      document.addEventListener("keydown", down)
-      return () => document.removeEventListener("keydown", down)
-    }, [])
+    
 
   return (
     <>

@@ -1,69 +1,38 @@
-
-import CarCard from '@/components/common/carCard'
 import React, { Suspense } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
+
+import CarCarosel from '@/components/common/car-carousel'
+import Hero from '@/components/home/hero'
+import { ArrowTopRightIcon } from '@radix-ui/react-icons'
 
 import services from "@/static-files/services";
-import CarCarosel from '@/components/common/car-carousel'
 import { getHomeData } from '@/actions/home'
-import Hero from '@/components/home/hero'
-import Link from 'next/link'
+
 import { Car } from '@prisma/client';
-import { ArrowTopRightIcon } from '@radix-ui/react-icons'
-// import Combo from '@/components/home/combo';
-import Navbar from '@/components/home/navbar';
-import { ErrorBoundary } from 'next/dist/client/components/error-boundary'
-// import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
-import ErrorComponent from '@/components/common/error';
+import { Button } from '@/components/ui/button'
 
 
 
 export const metadata = {
   title: "Buy & Sell Cars in Pakistan - Get Your Ride Now.",
   description: "Proudly providing unusual Car Needs in Pakistan. Buy & Sell Cars. List Your Car Now and let the Ghosts Work.",
-
 };
 
 
-async function getData() {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
-  try{
-    const res = await fetch(`/api/home`,
-  {
-    method: 'POST', 
-    headers: {
-    'Content-Type': 'application/json'
-    },
-    cache: 'no-store'
-     })
- 
-  if (!res.ok) {
-    throw new Error('Failed to fetch data')
-  }
-  
-  console.log("hello")
-  return res.json()
-        
-   
-} catch (error){
-    console.error(error)
-    return {}
-}
-
-  
-}
-
 
 const HomePage = async () => {
-  const data = await  getHomeData()
-  const { gpCars, featuredCars, recentCars } = data
+  await setTimeout(()=>{},500)
+  const response = await  getHomeData()
+  const { gpCars, featuredCars, recentCars } = response
 
   return (
     <div className='sapce-y-4'>
+    {/* Hero Section */}
       <Hero/>
-      {/* <Combo/> */}
+     
         
-      
+      {/* GP Cars */}
       <CarCarosel
       title="Ghost Yard's"
       see_more='inventory/search?adType=ghost-yard'
@@ -95,13 +64,7 @@ const HomePage = async () => {
           }
         </div>
       </div>
-      {/* <Suspense fallback={<><h1>hello</h1></>}>
-        <CarCarosel
-        title='Recent Cars'
-        see_more='inventory/search?adType=gp-car'
-        cars={recentCars as Car[]}
-        />
-      </Suspense> */}
+     
       <Suspense>
         <CarCarosel
         title='Featured Cars'
@@ -109,16 +72,29 @@ const HomePage = async () => {
         cars={featuredCars as Car[]}
         />
       </Suspense>
-      <CarCarosel
-      title='Recent Cars'
-      see_more='inventory/search?adType=free-listing'
-      cars={recentCars as Car[]}
-      />
-      {/* {JSON.stringify(recentCars)} */}
 
-  {/* <Navbar/> */}
+      <Suspense>
+        <CarCarosel
+        title='Recent Cars'
+        see_more='inventory/search?adType=free-listing'
+        cars={recentCars as Car[]}
+        />
+      </Suspense>
 
-
+      <div className='my-40 rounded-xl border-2 p-4 px-6 flex justify-between items-center'>
+                <div>
+                    <h4 className='text-xl font-semibold'>
+                       Ghost Bot is finally <span className='text-primary'>LIVE</span>
+                    </h4>
+                    <p className='text-sm'>Get instant replies with our Bot</p>
+                    <Link href={'/inventory/add-car'}>
+                        <Button className='my-4' variant={'outline'}>
+                            Check Out <ArrowTopRightIcon/>
+                        </Button>
+                    </Link>
+                </div>
+                <Image src={'/media/services/sell-now.webp'} width={200} height={200} alt='Ghost Bot'/>
+            </div>
     </div>
   )
 }

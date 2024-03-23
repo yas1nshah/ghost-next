@@ -5,20 +5,6 @@ import { GetMyAds } from '@/actions/search';
 import CarCard from '@/components/account/edit-car-card';
 import Pagination from '@/components/account/pagination';
 
-async function getData(page:number, id:string) {
-    const dynamicSearchURL = `http://localhost:3000/api/account/my-ads?page=${page}&id=${id}`;
-  
-    // console.log("yoyoyoyoo")
-    // console.log(props?.toString())
-    const res = await fetch(`${dynamicSearchURL}`,{ cache: 'no-store' })
-  
-    if (!res.ok) {
-      throw new Error('Failed to fetch data')
-    }
-    
-    // console.log(res.json.toString())
-    return res.json()
-  }
 
 const MyAdsPage = async ({params, searchParams}: any) => {
     const {page = 1} = searchParams;
@@ -38,7 +24,7 @@ const MyAdsPage = async ({params, searchParams}: any) => {
                     
                 </ul>
             </div>
-            <hr className='opacity-30'/>
+            <hr/>
         </div>
 
         <div>

@@ -19,7 +19,7 @@ import Input from 'postcss/lib/input'
 import Link from 'next/link'
 import menu from '@/static-files/menu'
 import Image from 'next/image'
-import SearchBar from '@/components/home/combo'
+import SearchBar from '@/components/home/search-bar'
 
 const Header = () => {
 

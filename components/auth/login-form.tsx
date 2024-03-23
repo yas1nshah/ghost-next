@@ -53,7 +53,7 @@ const LoginForm = () => {
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
                 <h2 className='text-2xl font-semibold'>Welcome Back! 👋</h2>
-                <div className="space-y-4">
+                <div className="space-y-4 mt-6">
                     <FormField
                         control={form.control}
                         name='email'

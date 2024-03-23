@@ -33,7 +33,7 @@ const BottomBar = (params:{id:string, title:string, seller:any}) => {
                 <div className='space-y-1 md:space-y-4'>
                     <h2 className='text-lg font-semibold'>{params.title}</h2>
                     <div className="flex gap-2">
-                        <Link href={`
+                        <Link target='_blank' href={`
                         https://wa.me/92${params.seller.phone}?text=Hello%2C%20I%20am%20interedted%20in%20your%20Ad%20for%20${params.title}.%20https://ghostprotocols.pk/inventory/-/${params.id}
                         
                         `}>
@@ -41,7 +41,7 @@ const BottomBar = (params:{id:string, title:string, seller:any}) => {
                                 Phone
                             </Button>
                         </Link>
-                        <Link href={''}>
+                        <Link target='_blank' href={`https://wa.me/16232741046?text=p/BTFM%20${params.title}.%20https://ghostprotocols.pk/inventory/-/${params.id}`}>
                             <Button size={'lg'} variant={'outline'} className='w-full bg-primary text-xs md:text-sm'>
                                 Buy it For Me
                             </Button>

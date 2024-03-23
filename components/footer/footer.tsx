@@ -33,22 +33,22 @@ const Footer = () => {
                     <h2 className="footer-head">Contact Us</h2>
                         <div className="flex flex-wrap gap-2">
                             <div className='p-2 px-3 bg-card rounded-xl hover:scale-110 transition-all'>
-                                <Link href={'/'}>
+                                <Link target="_blank" href={'https://wa.me/923344444302'}>
                                     <i className="icon invert dark:invert-0" style={{ backgroundPosition: '0px 0px' }}></i>
                                 </Link>
                             </div>
                             <div className='p-2 px-3 bg-card rounded-xl hover:scale-110 transition-all'>
-                                <Link href={'/'}>
+                                <Link href={'mailto:hello@ghostprotocols.pk'}>
                                     <i className="icon invert dark:invert-0" style={{ backgroundPosition: '-30px 0px' }}></i>
                                 </Link>
                             </div>
                             <div className='p-2 px-3 bg-card rounded-xl hover:scale-110 transition-all'>
-                                <Link href={'/'}>
+                                <Link target="_blank" href={'https://wa.me/923344444302'}>
                                     <i className="icon invert dark:invert-0"  style={{ backgroundPosition: '-60px 0px' }}></i>
                                 </Link>
                             </div>
                             <div className='p-2 px-3 bg-card rounded-xl hover:scale-110 transition-all'>
-                                <Link href={'/'}>
+                                <Link target="_blank" href={'https://maps.app.goo.gl/EjG7bRwhGmPZxu2t6'}>
                                     <i className="icon invert dark:invert-0" style={{ backgroundPosition: '-90px 0px' }}></i>
                                 </Link>
                             </div>
@@ -78,22 +78,22 @@ const Footer = () => {
                     <h2 className="footer-head">Socials</h2>
                         <div className="flex flex-wrap gap-2">
                             <div className='p-2 px-3 bg-card rounded-xl hover:scale-110 transition-all'>
-                                <Link href={'/'}>
+                                <Link target="_blank" href={'https://www.instagram.com/ghostprotocolspk/'}>
                                     <i className="icon" style={{ backgroundPosition: '-60px -60px' }}></i>
                                 </Link>
                             </div>
                             <div className='p-2 px-3 bg-card rounded-xl hover:scale-110 transition-all'>
-                                <Link href={'/'}>
+                                <Link target="_blank" href={'https://www.tiktok.com/@ghostprotocolspk'}>
                                     <i className="icon" style={{ backgroundPosition: '0px -60px' }}></i>
                                 </Link>
                             </div>
                             <div className='p-2 px-3 bg-card rounded-xl hover:scale-110 transition-all'>
-                                <Link href={'/'}>
+                                <Link href={''}>
                                     <i className="icon"  style={{ backgroundPosition: '-30px -60px' }}></i>
                                 </Link>
                             </div>
                             <div className='p-2 px-3 bg-card rounded-xl hover:scale-110 transition-all'>
-                                <Link href={'/'}>
+                                <Link href={''}>
                                     <i className="icon" style={{ backgroundPosition: '-90px -60px' }}></i>
                                 </Link>
                             </div>

@@ -22,7 +22,7 @@ const LoginPage = () => {
                     
                 </ul>
             </div>
-            <hr className='opacity-30'/>
+            <hr/>
         </div>
         <div className="flex">
           <Image className='hidden md:block flex-grow p-6 object-contain' src={"/media/services/login.png"} height={500} width={500} alt='Register To Ghost Protocols'/>

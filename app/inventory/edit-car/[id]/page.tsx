@@ -2,28 +2,39 @@
 import React from 'react'
 import EditCarForm from '@/components/inventory/edit-car/edit-car-form';
 import { getCarDetails } from '@/actions/car-details';
+import Link from 'next/link';
+import { auth } from '@/auth';
+import { redirect } from "next/navigation";
+import { toast } from 'sonner';
 
-// async function getData(id : string) {
-//   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
-//   const res = await fetch(`${baseUrl}/api/inventory/car-details?id=${id}`,{cache: 'no-cache'})
- 
-//   if (!res.ok) {
-//     throw new Error('Failed to fetch data')
-//   }
 
-//   return res.json()
-// }
 
 const EditCarPage = async ({params}:{params: {id:string}}) => {
-  
+  const session = await auth()
   const car = await getCarDetails(params.id)
-  console.log(car.car?.gallery)
+  if(session?.user?.id !== car.seller?.id){
+    redirect("/")
+    toast("Its not Your Car!😑")
+  }
+  
 
   return (
-    <main className='max-w-6xl min-h-svh'>
-      
+    <div>
+        <div className="m-2">
+          <h1 className='text-2xl md:text-4xl font-semibold'>Edit Car Form</h1>
+          <div className="text-xs md:text-sm breadcrumbs ">
+                <ul>
+                  <li><Link href={"/"}>Home</Link></li> 
+                  <li><Link href={`/inventory`}>Inventory</Link></li> 
+                  <li>Edit Car</li> 
+                  <li>Form</li> 
+                </ul>
+          </div>
+          <hr/>
+        </div>
+        
         <EditCarForm result ={car} />
-    </main>
+    </div>
   )
 }
 
