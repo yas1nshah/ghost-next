@@ -25,7 +25,7 @@ const RegisterPage = () => {
             <hr className='opacity-30'/>
         </div>
         <div className="flex">
-          <Image className='hidden md:block flex-grow p-6 object-contain' src={"/media/services/register.png"} height={500} width={500} alt='Register To Ghost Protocols'/>
+          <Image className='hidden md:block flex-grow p-6 object-contain' src={"/media/services/register.webp"} height={500} width={500} alt='Register To Ghost Protocols'/>
           <RegisterForm/>
         </div>
     </div>
