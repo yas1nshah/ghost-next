@@ -100,12 +100,12 @@ const SelectModel = (props : any) => {
           }
       }
 
-    const ONE_DAY = 24 * 60 * 60 * 1000;
+  
     useEffect(() => {
         const fetchMakes = async () => {
             try {
                 const lastFetchTime = localStorage.getItem('makesFetchTime');
-                if (lastFetchTime && Date.now() - parseInt(lastFetchTime) < ONE_DAY) {
+                if (lastFetchTime && Date.now() - parseInt(lastFetchTime) < (24 * 60 * 60 * 1000)) {
                     // Makes exist in local storage and were fetched within the last 24 hours
                     console.log('Makes exist in local storage and are recent.');
                     return;

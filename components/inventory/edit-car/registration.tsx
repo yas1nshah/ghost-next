@@ -45,12 +45,11 @@ const SelectRegistration = (props : any) => {
           }
       }
 
-    const ONE_DAY = 24 * 60 * 60 * 1000;
     useEffect(() => {
         const fetchCities = async () => {
             try {
                 const lastFetchTime = localStorage.getItem('citiesFetchTime');
-                if (lastFetchTime && Date.now() - parseInt(lastFetchTime) < ONE_DAY) {
+                if (lastFetchTime && Date.now() - parseInt(lastFetchTime) < (24 * 60 * 60 * 1000)) {
                     // Makes exist in local storage and were fetched within the last 24 hours
                     console.log('cities exist in local storage and are recent.');
                     return;

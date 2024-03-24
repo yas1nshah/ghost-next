@@ -15886,5 +15886,23 @@
     "title": "Tesla Roadster (2nd generation)",
     "engineType": "Electric",
     "powerOutput": "N/A (specifications not finalized)"
+  },
+  {
+    "id": 1767,
+    "make": "Bentley",
+    "model": "Flying Spur",
+    "title": "Bentley Flying Spur",
+    "engineType": "Petrol",
+    "engineCapacity": "2900 cc",
+    "bodyType": "Sedan"
+  },
+  {
+    "make": "Toyota",
+    "model": "Cresta",
+    "title": "Toyota Cresta",
+    "engineType": "Petrol",
+    "engineCapacity": "2000 cc - 3000 cc",
+    "bodyType": "Sedan"
   }
+  
 ]
