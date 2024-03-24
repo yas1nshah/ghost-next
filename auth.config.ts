@@ -4,10 +4,14 @@ import type { NextAuthConfig } from "next-auth"
 import { LoginSchema } from "./schemas"
 import { getUserByEmail, getUserByPhone } from "./data/user"
 import bcrypt from "bcryptjs"; 
+import { env } from "process";
+
  
+const authSecret = env['AUTH_SECRET'];
 
 
 export default {
+  
   providers: [Credentials({
     async authorize(credentials: Partial<Record<string, unknown>>, request: Request): Promise<any | null> {
       const validatedFields = LoginSchema.safeParse(credentials)
@@ -30,4 +34,6 @@ export default {
     }
     
   })],
+  secret: authSecret,
+  
 } satisfies NextAuthConfig

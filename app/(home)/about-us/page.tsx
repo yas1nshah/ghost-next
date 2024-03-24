@@ -18,7 +18,7 @@ export const metadata = {
 
 const AboutUs = () => {
   return (
-    <main className="main p-2">
+    <div className=" p-2">
         <div className="m-2">
         <h1 className='text-2xl md:text-4xl font-semibold'>About Us</h1>
         <div className="text-xs md:text-sm breadcrumbs ">
@@ -101,7 +101,7 @@ const AboutUs = () => {
             
           </div>
         </div>
-    </main>
+    </div>
   )
 }
 

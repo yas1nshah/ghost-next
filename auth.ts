@@ -5,7 +5,10 @@ import authConfig from "@/auth.config"
 
 import { db } from "@/lib/db"
 import { getUserById } from "./data/user"
+import { env } from "process"
 
+
+const authSecret = env['AUTH_SECRET'];
 
 declare module "next-auth" {
   interface User {
@@ -56,7 +59,7 @@ export const {
   },
   adapter: PrismaAdapter(db),
   session: { strategy: "jwt" },
-  
+
   trustHost: true,
   
   ...authConfig,
