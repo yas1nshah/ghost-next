@@ -41,7 +41,7 @@ const Gallery = (props : any) => {
 
               return (
               <CarouselItem className='min-h-lvh w-auto flex justify-center items-center' key={index}>
-                  <Image onClick={()=>{}} className='object-contain' src={`/media/inventory/${newImg}.webp`} width={800} height={800} alt='Gallery Item'/>
+                  <Image onClick={()=>{}} className='object-contain' src={`https://media.ghostprotocls.pk/media/inventory/${newImg}.webp`} width={800} height={800} alt='Gallery Item'/>
                 <div >
                 </div>
               </CarouselItem>
@@ -72,7 +72,7 @@ const Gallery = (props : any) => {
 
             return (
             <CarouselItem key={index} onClick={()=>setActive((prev)=>!prev)}>
-              <Image className='w-full' src={`/media/inventory/${newImg}.webp`} width={500} height={500} alt='Gallery Item'/>
+              <Image className='w-full' src={`https://media.ghostprotocls.pk/media/inventory/${newImg}.webp`} width={500} height={500} alt='Gallery Item'/>
             </CarouselItem>
           )})}
         </CarouselContent>
