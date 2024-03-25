@@ -5,7 +5,7 @@ import sharp from 'sharp';
 import { useSearchParams } from 'next/navigation'
 
 export async function GET(request: NextRequest, { params, searchParams }: { params: { path: string[] }, searchParams: any }) {
-  const imagePath = path.resolve(process.cwd(), 'public', 'media2', ...params.path);
+  const imagePath = path.resolve(process.cwd(), 'public', 'media', ...params.path);
   const w = request.nextUrl.searchParams.get("w");
   const h = request.nextUrl.searchParams.get("h");
   const q = request.nextUrl.searchParams.get("q");
