@@ -19,10 +19,9 @@ export const metadata = {
   description: "Proudly providing unusual Car Needs in Pakistan. Buy & Sell Cars. List Your Car Now and let the Ghosts Work.",
 };
 
-
+export const revalidate = 100
 
 const HomePage = async () => {
-  await setTimeout(()=>{},500)
   const response = await  getHomeData()
   const { gpCars, featuredCars, recentCars } = response
 

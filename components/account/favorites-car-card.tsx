@@ -20,7 +20,7 @@ const CarCard = (params : any) => {
         <Link key={car.id} href={`/inventory/${link}/${car.id}`}  className={`bg-card ${car.featuredCar && "border-2 border-secondary"}  h-28 mx-0 md:h-40 md:px-2 w-full flex rounded-xl dark:text-white text-nowrap `}>
           
         <div className='w-2/6 p-2 md:w-1/4 md:px-2 md:py-3 h-full flex-shrink-0 flex-grow-0'>
-          <Image draggable="false" className="w-full h-full object-cover  rounded-xl" src={`/media/inventory/${newImg}.webp`} width={250} height={150} alt={car.title}/>
+          <img draggable="false" className="w-full h-full object-cover  rounded-xl" src={`https://media.ghostprotocls.pk/media/inventory/${newImg}.webp`} width={250} height={150} alt={car.title}/>
         </div>
   
         <div className="flex-grow md:flex overflow-hidden">

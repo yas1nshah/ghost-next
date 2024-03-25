@@ -266,7 +266,7 @@ const EditCarForm = ({result}: any) => {
                     onClick={()=>setNewCar({...newCar, galleryIndex: index})}>
                         <img
                             className='w-20 h-20 object-cover rounded-xl'
-                            src={`/media/inventory/${src}.webp`}
+                            src={`/media/inventory/${src}.webp?w=250&h=150&q=75`}
                             alt={`Image ${index + 1}`}
                         />
                         <i className="bg-base hover:bg-secondary absolute top-1 right-1 px-2 rounded-xl" onClick={()=>removeImage(index)}>x</i>

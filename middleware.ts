@@ -32,8 +32,8 @@ export async function middleware(req: NextRequest) {
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix)
   const isPrivateRoute = authRoutes.includes(nextUrl.pathname)
   const isLoggedOutRoute = loggedOutRoutes.includes(nextUrl.pathname)
-  console.log(req.url)
-  console.log(nextUrl.pathname)
+  // console.log(req.url)
+  // console.log(nextUrl.pathname)
 
   if(isLoggedOutRoute)
     {

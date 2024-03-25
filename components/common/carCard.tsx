@@ -39,7 +39,7 @@ const CarCard = async (params: any) => {
             <Skeleton className="w-full h-full rounded-t-xl flex items-center justify-center">
               <CameraIcon className='w-8 h-8'/>
             </Skeleton>
-            <Image className="z-20 w-full h-full object-cover  absolute top-0 right-0 rounded-t-xl bg-black" src={`/media/inventory/${newImg}.webp`} width={250} height={150} alt={title}/>
+            <img className="z-20 w-full h-full object-cover  absolute top-0 right-0 rounded-t-xl bg-black" src={`/media/inventory/${newImg}.webp?w=250&h=150&q=75`} width={250} height={150} alt={title}/>
         </div>
     
         <div className="h-1/2 w-full px-2 py-2 flex flex-col justify-evenly">
